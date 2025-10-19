@@ -1,0 +1,383 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Lista de Alumnos</h4>
+        <div class="flex-shrink-0">
+          <button class="btn btn-success btn-sm" (click)="abrirModalNuevo()">
+            Agregar Nuevo
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover w-100"
+                 datatable
+                 [dtOptions]="dtOptions"
+                 [dtTrigger]="dtTrigger"
+                 style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Documento Identidad</th>
+                <th>Fecha Nacimiento</th>
+                <th>Sexo</th>
+                <th>Ciudad</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- DataTables carga los datos -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Alumno/Apoderado -->
+<ng-template #alumnoModal>
+  <div class="modal-header">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab==='alumno'" (click)="activeTab='alumno'">Alumno</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab==='apoderado'" (click)="activeTab='apoderado'">Apoderado</a>
+      </li>
+    </ul>
+  </div>
+  <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div [ngSwitch]="activeTab">
+        <!-- Tab Alumno -->
+        <div *ngSwitchCase="'alumno'">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="documentoIdentidad">Documento Identidad</label>
+                <input id="documentoIdentidad" type="text" class="form-control" formControlName="documentoIdentidad">
+              </div>
+              <div class="mb-3">
+                <label for="nombres">Nombres</label>
+                <input id="nombres" type="text" class="form-control" formControlName="nombres">
+              </div>
+              <div class="mb-3">
+                <label for="fechaNacimiento">Fecha Nacimiento</label>
+                <input id="fechaNacimiento" type="date" class="form-control" formControlName="fechaNacimiento" (change)="onCalcularEdad($event)">
+              </div>
+              <div class="mb-3">
+                <label for="ciudad">Ciudad</label>
+                <input id="ciudad" type="text" class="form-control" formControlName="ciudad">
+              </div>
+              <div class="mb-3">
+                <label for="diagnostico">Diagnóstico</label>
+                <input id="diagnostico" type="text" class="form-control" formControlName="diagnostico">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="codigo">Código</label>
+                <input id="codigo" type="text" class="form-control" formControlName="codigo">
+              </div>
+              <div class="mb-3">
+                <label for="apellidos">Apellidos</label>
+                <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
+              </div>
+              <div class="mb-3">
+                <label for="edad">Edad</label>
+                <input id="edad" type="number" class="form-control" formControlName="edad">
+              </div>
+              <div class="mb-3">
+                <label for="sexo">Sexo</label>
+                <select id="sexo" class="form-select" formControlName="sexo">
+                  <option value="">Seleccione</option>
+                  <option value="MASCULINO">Masculino</option>
+                  <option value="FEMENINO">Femenino</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="direccion">Dirección</label>
+                <input id="direccion" type="text" class="form-control" formControlName="direccion">
+              </div>
+              <div class="mb-3">
+                <label for="observacion">Observación</label>
+                <input id="observacion" type="text" class="form-control" formControlName="observacion">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Tab Apoderado -->
+        <div *ngSwitchCase="'apoderado'">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-3">
+                <div class="card-header">Principal</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_documentoIdentidad">Documento Identidad</label>
+                        <input id="apoderadoPrincipal_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoPrincipal_documentoIdentidad">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_nombres">Nombres</label>
+                        <input id="apoderadoPrincipal_nombres" type="text" class="form-control" formControlName="apoderadoPrincipal_nombres">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_telefono1">Teléfono 1</label>
+                        <input id="apoderadoPrincipal_telefono1" type="text" class="form-control" formControlName="apoderadoPrincipal_telefono1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_correo">Correo</label>
+                        <input id="apoderadoPrincipal_correo" type="email" class="form-control" formControlName="apoderadoPrincipal_correo">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_tipoRelacion">Tipo Relación</label>
+                        <input id="apoderadoPrincipal_tipoRelacion" type="text" class="form-control" formControlName="apoderadoPrincipal_tipoRelacion">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_apellidos">Apellidos</label>
+                        <input id="apoderadoPrincipal_apellidos" type="text" class="form-control" formControlName="apoderadoPrincipal_apellidos">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoPrincipal_telefono2">Teléfono 2</label>
+                        <input id="apoderadoPrincipal_telefono2" type="text" class="form-control" formControlName="apoderadoPrincipal_telefono2">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">Secundario</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_documentoIdentidad">Documento Identidad</label>
+                        <input id="apoderadoSecundario_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoSecundario_documentoIdentidad">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_nombres">Nombres</label>
+                        <input id="apoderadoSecundario_nombres" type="text" class="form-control" formControlName="apoderadoSecundario_nombres">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_telefono1">Teléfono 1</label>
+                        <input id="apoderadoSecundario_telefono1" type="text" class="form-control" formControlName="apoderadoSecundario_telefono1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_correo">Correo</label>
+                        <input id="apoderadoSecundario_correo" type="email" class="form-control" formControlName="apoderadoSecundario_correo">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_tipoRelacion">Tipo Relación</label>
+                        <input id="apoderadoSecundario_tipoRelacion" type="text" class="form-control" formControlName="apoderadoSecundario_tipoRelacion">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_apellidos">Apellidos</label>
+                        <input id="apoderadoSecundario_apellidos" type="text" class="form-control" formControlName="apoderadoSecundario_apellidos">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apoderadoSecundario_telefono2">Teléfono 2</label>
+                        <input id="apoderadoSecundario_telefono2" type="text" class="form-control" formControlName="apoderadoSecundario_telefono2">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</ng-template>
+
+
+<ng-template #listaTalleresMes>
+  <div class="modal-header">
+    <h5 class="modal-title">Detalles del Alumno</h5>
+  </div>
+ 
+    <div class="modal-body">
+      <div class="mb-3 d-flex gap-2 align-items-center">
+        <label class="form-label mb-0">Año:</label>
+        <select class="form-select w-auto" [(ngModel)]="filtroAnio">
+          <option *ngFor="let anio of aniosDisponibles" [value]="anio">{{ anio }}</option>
+        </select>
+        <label class="form-label mb-0 ms-3">Mes:</label>
+        <select class="form-select w-auto" [(ngModel)]="filtroMes">
+          <option *ngFor="let mes of mesesDisponibles" [value]="mes">{{ mes }}</option>
+        </select>
+      </div>
+      <div *ngFor="let mes of data   " class="mb-10">
+  <h2 class="text-2xl font-bold text-center mb-4">{{ mes.titulo }}</h2>
+  <table class="w-11/12 border-collapse shadow-lg text-center mx-auto">
+    <thead>
+      <tr>
+        <th colspan="5" class="bg-gray-200 text-lg font-semibold py-3 border border-gray-300">
+          {{ mes.titulo }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let horario of mes.horarios">
+        <tr >
+          <td
+            [ngClass]="horario.color"
+            class="text-white font-semibold border border-gray-300"
+            rowspan="2"
+          >
+            {{ horario.hora }}
+          </td>
+          <td
+            *ngFor="let bloque of horario.bloques"
+            class="bg-amber-100 border border-gray-300  text-sm align-top"
+            style="cursor: pointer;" (click)="redireccionarMatricula(horario.idTallerApertura)"
+          >
+            <div class="font-semibold">{{ bloque.centro }}</div>
+            <div class="text-xs text-gray-600">{{ bloque.fechas }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td
+            *ngFor="let bloque of horario.bloques"
+            class="bg-green-500 text-white font-bold border border-gray-300"
+          >
+            <div 
+              class="flex justify-center items-center gap-2 py-1"
+              *ngIf="bloque.semanas.length; else emptyCell"
+            >
+              <span
+                *ngFor="let semana of bloque.semanas"
+                class="bg-green-600 px-2 py-1 rounded-sm"
+              >
+               <b>{{ semana }}</b>
+              </span>
+            </div>
+            <ng-template #emptyCell>
+              <div class="opacity-70">-</div>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarModalCronograma()">Cerrar</button>
+    </div>
+   
+</ng-template>
+
+
+
+<ng-template #matriculaTaller>
+  <div class="modal-header">
+    <button class="btn btn-secondary btn-sm" (click)="redireccionarAnterior()"><i class="las la-arrow-circle-left"></i> Anterior</button>
+    <h5 class="modal-title">Detalle del taller</h5>
+  </div>
+  <div class="modal-body">
+    <div class="card mb-3" style="background: #fff7ec;">
+      <div class="card-body">
+        <h6 class="mb-3" style="color: #b8860b;">Datos Academicos</h6>
+        <div class="row g-2">
+          <div class="col-md-2">
+            <label class="form-label">Etapa</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionEtapa || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Grupo</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionGrupo || ''" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Descripcion Taller Academico</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionTaller || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Local</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionLocal || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Total Vacantes</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.total_vacantes || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Total Vacantes Disponibles</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.vacantes_disponible || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Fecha Inicio</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaInicio || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Fecha Fin</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaFin || ''" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h6 class="mb-3" style="color: #1d3557;">Datos del Alumno</h6>
+        <div class="row g-2">
+          <div class="col-md-3">
+            <label class="form-label">Documento Identidad</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.documentoIdentidad || ''" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Nombres</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.nombres || ''" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Apellidos</label>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.apellidos || ''" readonly>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Fecha Nacimiento</label>
+            <input type="text" type="date" class="form-control form-control-sm" [value]="datosAlumnoSelected.fechaNacimiento || ''" readonly>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Sexo</label>
+            <select class="form-control form-control-sm" [value]="datosAlumnoSelected.sexo || ''" readonly>
+              <option value="MASCULINO">Masculino</option>
+              <option value="FEMENINO">Femenino</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Tipo de matrícula</label>
+            <select class="form-control form-control-sm" [value]="'Nuevo'">
+              <option value="Nuevo">Nuevo</option>
+              <option value="Antiguo">Antiguo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <button class="btn btn-success" (click)="registrarMatricula()">Registrar Matrícula</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</ng-template>

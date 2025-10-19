@@ -1,0 +1,2998 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "JavaInUse Authentication Service"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "JavaInUseSecurityScheme": []
+    }
+  ],
+  "paths": {
+    "/employee": {
+      "put": {
+        "tags": [
+          "employee-controller"
+        ],
+        "operationId": "updateEmployee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "employee-controller"
+        ],
+        "operationId": "createEmployee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuario/editar": {
+      "put": {
+        "tags": [
+          "usuario-controller"
+        ],
+        "operationId": "editar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/editar": {
+      "put": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "editar_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TallerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rol/editar": {
+      "put": {
+        "tags": [
+          "rol-controller"
+        ],
+        "operationId": "editar_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/local/editar": {
+      "put": {
+        "tags": [
+          "local-controller"
+        ],
+        "operationId": "editar_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupo/editar": {
+      "put": {
+        "tags": [
+          "grupo-controller"
+        ],
+        "operationId": "editar_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapa/editar": {
+      "put": {
+        "tags": [
+          "etapa-controller"
+        ],
+        "operationId": "editar_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EtapaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/docente/editar": {
+      "put": {
+        "tags": [
+          "docente-controller"
+        ],
+        "operationId": "editar_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocenteDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aula/editar": {
+      "put": {
+        "tags": [
+          "aula-controller"
+        ],
+        "operationId": "editar_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AulaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/editar": {
+      "put": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "editar_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuario/registrar": {
+      "post": {
+        "tags": [
+          "usuario-controller"
+        ],
+        "operationId": "registrar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/registrar": {
+      "post": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "registrar_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TallerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/registraMatricula": {
+      "post": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "registrarMatricula",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/aperturaTaller": {
+      "post": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "aperturaTaller",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AperturaTallerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rolpermisos/actualizar": {
+      "post": {
+        "tags": [
+          "rol-permiso-controller"
+        ],
+        "operationId": "obtener",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PermisoDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rol/registrar": {
+      "post": {
+        "tags": [
+          "rol-controller"
+        ],
+        "operationId": "registrar_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/local/registrar": {
+      "post": {
+        "tags": [
+          "local-controller"
+        ],
+        "operationId": "registrar_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupotaller/asignarTaller": {
+      "post": {
+        "tags": [
+          "grupo-taller-controller"
+        ],
+        "operationId": "asignarTaller",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TallerDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupo/registrar": {
+      "post": {
+        "tags": [
+          "grupo-controller"
+        ],
+        "operationId": "registrar_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapaGrupo/guardar": {
+      "post": {
+        "tags": [
+          "etapa-grupo-controller"
+        ],
+        "operationId": "registrar_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GrupoDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapa/registrar": {
+      "post": {
+        "tags": [
+          "etapa-controller"
+        ],
+        "operationId": "registrar_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EtapaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/docente/registrar": {
+      "post": {
+        "tags": [
+          "docente-controller"
+        ],
+        "operationId": "registrar_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocenteDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authentication/login": {
+      "post": {
+        "tags": [
+          "authentication-controller"
+        ],
+        "operationId": "authentication",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JwtRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aula/registrar": {
+      "post": {
+        "tags": [
+          "aula-controller"
+        ],
+        "operationId": "registrar_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AulaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/registrar": {
+      "post": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "registrar_9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/registrarCuotaMatricula": {
+      "post": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "registrarCuotaMatricula",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CuotaMatriculaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/actualizarSegimientoAlumno": {
+      "post": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "actualizarSegimientoAlumno",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeguimientoSesionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employees": {
+      "get": {
+        "tags": [
+          "employee-controller"
+        ],
+        "operationId": "getEmployees",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/{employeeId}": {
+      "get": {
+        "tags": [
+          "employee-controller"
+        ],
+        "operationId": "getEmployeeById",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "employee-controller"
+        ],
+        "operationId": "deleteEmployees",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "100 CONTINUE",
+                    "101 SWITCHING_PROTOCOLS",
+                    "102 PROCESSING",
+                    "103 EARLY_HINTS",
+                    "103 CHECKPOINT",
+                    "200 OK",
+                    "201 CREATED",
+                    "202 ACCEPTED",
+                    "203 NON_AUTHORITATIVE_INFORMATION",
+                    "204 NO_CONTENT",
+                    "205 RESET_CONTENT",
+                    "206 PARTIAL_CONTENT",
+                    "207 MULTI_STATUS",
+                    "208 ALREADY_REPORTED",
+                    "226 IM_USED",
+                    "300 MULTIPLE_CHOICES",
+                    "301 MOVED_PERMANENTLY",
+                    "302 FOUND",
+                    "302 MOVED_TEMPORARILY",
+                    "303 SEE_OTHER",
+                    "304 NOT_MODIFIED",
+                    "305 USE_PROXY",
+                    "307 TEMPORARY_REDIRECT",
+                    "308 PERMANENT_REDIRECT",
+                    "400 BAD_REQUEST",
+                    "401 UNAUTHORIZED",
+                    "402 PAYMENT_REQUIRED",
+                    "403 FORBIDDEN",
+                    "404 NOT_FOUND",
+                    "405 METHOD_NOT_ALLOWED",
+                    "406 NOT_ACCEPTABLE",
+                    "407 PROXY_AUTHENTICATION_REQUIRED",
+                    "408 REQUEST_TIMEOUT",
+                    "409 CONFLICT",
+                    "410 GONE",
+                    "411 LENGTH_REQUIRED",
+                    "412 PRECONDITION_FAILED",
+                    "413 PAYLOAD_TOO_LARGE",
+                    "413 REQUEST_ENTITY_TOO_LARGE",
+                    "414 URI_TOO_LONG",
+                    "414 REQUEST_URI_TOO_LONG",
+                    "415 UNSUPPORTED_MEDIA_TYPE",
+                    "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+                    "417 EXPECTATION_FAILED",
+                    "418 I_AM_A_TEAPOT",
+                    "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+                    "420 METHOD_FAILURE",
+                    "421 DESTINATION_LOCKED",
+                    "422 UNPROCESSABLE_ENTITY",
+                    "423 LOCKED",
+                    "424 FAILED_DEPENDENCY",
+                    "425 TOO_EARLY",
+                    "426 UPGRADE_REQUIRED",
+                    "428 PRECONDITION_REQUIRED",
+                    "429 TOO_MANY_REQUESTS",
+                    "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+                    "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+                    "500 INTERNAL_SERVER_ERROR",
+                    "501 NOT_IMPLEMENTED",
+                    "502 BAD_GATEWAY",
+                    "503 SERVICE_UNAVAILABLE",
+                    "504 GATEWAY_TIMEOUT",
+                    "505 HTTP_VERSION_NOT_SUPPORTED",
+                    "506 VARIANT_ALSO_NEGOTIATES",
+                    "507 INSUFFICIENT_STORAGE",
+                    "508 LOOP_DETECTED",
+                    "509 BANDWIDTH_LIMIT_EXCEEDED",
+                    "510 NOT_EXTENDED",
+                    "511 NETWORK_AUTHENTICATION_REQUIRED"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuario/obtener/{idUsuario}": {
+      "get": {
+        "tags": [
+          "usuario-controller"
+        ],
+        "operationId": "obtener_1",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuario/listar": {
+      "get": {
+        "tags": [
+          "usuario-controller"
+        ],
+        "operationId": "lista",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/obtener/{idTaller}": {
+      "get": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "obtener_2",
+        "parameters": [
+          {
+            "name": "idTaller",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/listar": {
+      "get": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "lista_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/listarAperturaTaller": {
+      "get": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "listarAperturaTaller",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rolpermisos/obtener/{idRol}": {
+      "get": {
+        "tags": [
+          "rol-permiso-controller"
+        ],
+        "operationId": "lista_2",
+        "parameters": [
+          {
+            "name": "idRol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rol/obtener/{idRol}": {
+      "get": {
+        "tags": [
+          "rol-controller"
+        ],
+        "operationId": "obtener_3",
+        "parameters": [
+          {
+            "name": "idRol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rol/listar": {
+      "get": {
+        "tags": [
+          "rol-controller"
+        ],
+        "operationId": "lista_3",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/local/obtener/{idLocal}": {
+      "get": {
+        "tags": [
+          "local-controller"
+        ],
+        "operationId": "obtener_4",
+        "parameters": [
+          {
+            "name": "idLocal",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/local/listar": {
+      "get": {
+        "tags": [
+          "local-controller"
+        ],
+        "operationId": "lista_4",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupotaller/listar/{idEtapa}/{idGrupo}": {
+      "get": {
+        "tags": [
+          "grupo-taller-controller"
+        ],
+        "operationId": "lista_5",
+        "parameters": [
+          {
+            "name": "idEtapa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idGrupo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupotaller/listaGruposyTalleres": {
+      "get": {
+        "tags": [
+          "grupo-taller-controller"
+        ],
+        "operationId": "listaGruposyTalleres",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupo/obtener/{idGrupo}": {
+      "get": {
+        "tags": [
+          "grupo-controller"
+        ],
+        "operationId": "obtener_5",
+        "parameters": [
+          {
+            "name": "idGrupo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupo/listar": {
+      "get": {
+        "tags": [
+          "grupo-controller"
+        ],
+        "operationId": "lista_6",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/externalApi/obtener/{numeroDocumento}": {
+      "get": {
+        "tags": [
+          "external-api-controller"
+        ],
+        "operationId": "lista_7",
+        "parameters": [
+          {
+            "name": "numeroDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapaGrupo/listarGrupoDetalle/{idEtapa}": {
+      "get": {
+        "tags": [
+          "etapa-grupo-controller"
+        ],
+        "operationId": "listaGrupoDetalle",
+        "parameters": [
+          {
+            "name": "idEtapa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapaGrupo/listar/{idEtapa}": {
+      "get": {
+        "tags": [
+          "etapa-grupo-controller"
+        ],
+        "operationId": "lista_8",
+        "parameters": [
+          {
+            "name": "idEtapa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapa/obtener/{idEtapa}": {
+      "get": {
+        "tags": [
+          "etapa-controller"
+        ],
+        "operationId": "obtener_6",
+        "parameters": [
+          {
+            "name": "idEtapa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapa/listar": {
+      "get": {
+        "tags": [
+          "etapa-controller"
+        ],
+        "operationId": "lista_9",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/docente/obtener/{idDocente}": {
+      "get": {
+        "tags": [
+          "docente-controller"
+        ],
+        "operationId": "obtener_7",
+        "parameters": [
+          {
+            "name": "idDocente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/docente/listar": {
+      "get": {
+        "tags": [
+          "docente-controller"
+        ],
+        "operationId": "lista_10",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authentication/validartoken": {
+      "get": {
+        "tags": [
+          "authentication-controller"
+        ],
+        "operationId": "validate",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idUsuario",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authentication/validaciones": {
+      "get": {
+        "tags": [
+          "authentication-controller"
+        ],
+        "operationId": "validate_1",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "flag",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aula/obtener/{idAula}": {
+      "get": {
+        "tags": [
+          "aula-controller"
+        ],
+        "operationId": "obtener_8",
+        "parameters": [
+          {
+            "name": "idAula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aula/listar": {
+      "get": {
+        "tags": [
+          "aula-controller"
+        ],
+        "operationId": "lista_11",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/apoderado/listar": {
+      "get": {
+        "tags": [
+          "apoderado-controller"
+        ],
+        "operationId": "lista_12",
+        "parameters": [
+          {
+            "name": "idAlumno",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/talleresMatriculados/{idAlumno}": {
+      "get": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "talleresMatriculados",
+        "parameters": [
+          {
+            "name": "idAlumno",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/seguimientoTaller/{idMatricula}": {
+      "get": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "seguimientoTaller",
+        "parameters": [
+          {
+            "name": "idMatricula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/obtener/{idAlumno}": {
+      "get": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "obtener_9",
+        "parameters": [
+          {
+            "name": "idAlumno",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/listar": {
+      "get": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "lista_13",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/cuotasMatricula/{idMatricula}": {
+      "get": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "cuotasMatricula",
+        "parameters": [
+          {
+            "name": "idMatricula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usuario/eliminar/{idUsuario}": {
+      "delete": {
+        "tags": [
+          "usuario-controller"
+        ],
+        "operationId": "eliminar",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taller/eliminar/{idTaller}": {
+      "delete": {
+        "tags": [
+          "taller-conttallerler"
+        ],
+        "operationId": "eliminar_1",
+        "parameters": [
+          {
+            "name": "idTaller",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rol/eliminar/{idRol}": {
+      "delete": {
+        "tags": [
+          "rol-controller"
+        ],
+        "operationId": "eliminar_2",
+        "parameters": [
+          {
+            "name": "idRol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/local/eliminar/{idLocal}": {
+      "delete": {
+        "tags": [
+          "local-controller"
+        ],
+        "operationId": "eliminar_3",
+        "parameters": [
+          {
+            "name": "idLocal",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grupo/eliminar/{idGrupo}": {
+      "delete": {
+        "tags": [
+          "grupo-controller"
+        ],
+        "operationId": "eliminar_4",
+        "parameters": [
+          {
+            "name": "idGrupo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/etapa/eliminar/{idEtapa}": {
+      "delete": {
+        "tags": [
+          "etapa-controller"
+        ],
+        "operationId": "eliminar_5",
+        "parameters": [
+          {
+            "name": "idEtapa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/docente/eliminar/{idDocente}": {
+      "delete": {
+        "tags": [
+          "docente-controller"
+        ],
+        "operationId": "eliminar_6",
+        "parameters": [
+          {
+            "name": "idDocente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aula/eliminar/{idAula}": {
+      "delete": {
+        "tags": [
+          "aula-controller"
+        ],
+        "operationId": "eliminar_7",
+        "parameters": [
+          {
+            "name": "idAula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alumno/eliminar/{idAlumno}": {
+      "delete": {
+        "tags": [
+          "alumno-controller"
+        ],
+        "operationId": "eliminar_8",
+        "parameters": [
+          {
+            "name": "idAlumno",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapperObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EmployeeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          }
+        }
+      },
+      "MenuDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "subItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubMenuDto"
+            }
+          },
+          "Activo": {
+            "type": "string"
+          }
+        }
+      },
+      "RolDto": {
+        "type": "object",
+        "properties": {
+          "IdRol": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "SubMenuDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "accion": {
+            "type": "string"
+          },
+          "Activo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UsuarioDto": {
+        "type": "object",
+        "properties": {
+          "IdUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "LoginUsuario": {
+            "type": "string"
+          },
+          "LoginClave": {
+            "type": "string"
+          },
+          "Nombres": {
+            "type": "string"
+          },
+          "Apellidos": {
+            "type": "string"
+          },
+          "DescripcionReferencia": {
+            "type": "string"
+          },
+          "IdReferencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "IdRol": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Rol": {
+            "$ref": "#/components/schemas/RolDto"
+          },
+          "Menus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuDto"
+            }
+          }
+        }
+      },
+      "ResponseWrapperObject": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "additional": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "TallerDto": {
+        "type": "object",
+        "properties": {
+          "idTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "asignado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioRegistro": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioActualizacion": {
+            "type": "string"
+          },
+          "fechaActualizacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idEtapa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idGrupo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LocalDto": {
+        "type": "object",
+        "properties": {
+          "idLocal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GrupoDto": {
+        "type": "object",
+        "properties": {
+          "idGrupo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcionGrupo": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "asignado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioRegistro": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioActualizacion": {
+            "type": "string"
+          },
+          "fechaActualizacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "listaTaller": {
+            "$ref": "#/components/schemas/TallerDto"
+          },
+          "idEtapa": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "EtapaDto": {
+        "type": "object",
+        "properties": {
+          "idEtapa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "local": {
+            "$ref": "#/components/schemas/LocalDto"
+          },
+          "descripcionEtapa": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioRegistro": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioActualizacion": {
+            "type": "string"
+          },
+          "fechaActualizacion": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DocenteDto": {
+        "type": "object",
+        "properties": {
+          "idDocente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string"
+          },
+          "documentoIdentidad": {
+            "type": "string"
+          },
+          "nombres": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sexo": {
+            "type": "string"
+          },
+          "gradoEstudio": {
+            "type": "string"
+          },
+          "ciudad": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "numeroTelefono": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AulaDto": {
+        "type": "object",
+        "properties": {
+          "idAula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "local": {
+            "$ref": "#/components/schemas/LocalDto"
+          },
+          "descripcionAula": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioRegistro": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AlumnoDto": {
+        "type": "object",
+        "properties": {
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string"
+          },
+          "nombres": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "documentoIdentidad": {
+            "type": "string"
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sexo": {
+            "type": "string"
+          },
+          "ciudad": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "telefono": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "edad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diagnostico": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "usuarioRegistro": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioModificacion": {
+            "type": "string"
+          },
+          "fechaModificacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "apoderados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApoderadoDto"
+            }
+          }
+        }
+      },
+      "ApoderadoDto": {
+        "type": "object",
+        "properties": {
+          "idApoderado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sexo": {
+            "type": "string"
+          },
+          "ciudad": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "tipoRelacion": {
+            "type": "string"
+          },
+          "telefono1": {
+            "type": "string"
+          },
+          "telefono2": {
+            "type": "string"
+          },
+          "documentoIdentidad": {
+            "type": "string"
+          },
+          "nombres": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estadoCivil": {
+            "type": "string"
+          }
+        }
+      },
+      "MatriculaDto": {
+        "type": "object",
+        "properties": {
+          "idMatricula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string"
+          },
+          "situacion": {
+            "type": "string"
+          },
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAperturaTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idApoderado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AperturaTallerDetDto": {
+        "type": "object",
+        "properties": {
+          "idAperturaTallerDet": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAperturaTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          }
+        }
+      },
+      "AperturaTallerDto": {
+        "type": "object",
+        "properties": {
+          "idAperturaTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEtapaDetalleTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEtapa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idGrupo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTaller": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcionTaller": {
+            "type": "string"
+          },
+          "diaSemana": {
+            "type": "string"
+          },
+          "horaInicio": {
+            "type": "string"
+          },
+          "horaFin": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          },
+          "total_vacantes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vacantes_disponible": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vacantes_ocupadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vacantes_opcionales": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcionEtapa": {
+            "type": "string"
+          },
+          "descripcionGrupo": {
+            "type": "string"
+          },
+          "descripcionAula": {
+            "type": "string"
+          },
+          "descripcionLocal": {
+            "type": "string"
+          },
+          "apertura": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AperturaTallerDetDto"
+            }
+          }
+        }
+      },
+      "PermisoDto": {
+        "type": "object",
+        "properties": {
+          "activo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idPermisos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subMenu": {
+            "type": "string"
+          },
+          "menu": {
+            "type": "string"
+          }
+        }
+      },
+      "JwtRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CuotaMatriculaDto": {
+        "type": "object",
+        "properties": {
+          "flag": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroCuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "monto": {
+            "type": "number"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estadoPago": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "idMatricula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombres": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "descripcionGrupo": {
+            "type": "string"
+          },
+          "descripcionEtapa": {
+            "type": "string"
+          },
+          "local": {
+            "type": "string"
+          }
+        }
+      },
+      "SeguimientoSesionDto": {
+        "type": "object",
+        "properties": {
+          "idMatricula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idSeguimientoSesion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "asistencia": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idAperturaTallerDet": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcionSesion": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "taller": {
+            "type": "string"
+          },
+          "descripcionGrupo": {
+            "type": "string"
+          },
+          "descripcionEtapa": {
+            "type": "string"
+          },
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombres": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "seguimiento1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento2": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento3": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento4": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento5": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento6": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento7": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento8": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento9": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimiento10": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JavaInUseSecurityScheme": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

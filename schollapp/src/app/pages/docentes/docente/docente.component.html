@@ -1,0 +1,111 @@
+<div class="card">
+  <div class="card-header align-items-center d-flex">
+    <h4 class="card-title mb-0 flex-grow-1">Lista de Docentes</h4>
+    <div class="flex-shrink-0">
+      <button class="btn btn-success btn-sm" (click)="abrirModalNuevo()">Agregar Nuevo</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover w-100"
+             datatable
+             [dtOptions]="dtOptions"
+             [dtTrigger]="dtTrigger"
+             style="width: 100%;">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Documento Identidad</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha Nacimiento</th>
+            <th>Sexo</th>
+            <th>Grado Estudio</th>
+            <th>Ciudad</th>
+            <th>Dirección</th>
+            <th>Email</th>
+            <th>Número Telefónico</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- DataTables carga los datos -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Docente -->
+<ng-template #docenteModal>
+  <form [formGroup]="docenteForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h5 class="modal-title">Docente</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="documentoIdentidad">Documento Identidad</label>
+            <input id="documentoIdentidad" type="text" class="form-control" formControlName="documentoIdentidad">
+          </div>
+          <div class="mb-3">
+            <label for="nombres">Nombres</label>
+            <input id="nombres" type="text" class="form-control" formControlName="nombres">
+          </div>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="form-control" formControlName="email">
+          </div>
+          <div class="mb-3">
+            <label for="gradoEstudio">Grado estudio</label>
+            <input id="gradoEstudio" type="text" class="form-control" formControlName="gradoEstudio">
+          </div>
+          <div class="mb-3">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" class="form-select" formControlName="sexo">
+              <option value="">Seleccione</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" type="text" class="form-control" formControlName="direccion">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="codigo">Código</label>
+            <input id="codigo" type="text" class="form-control" formControlName="codigo">
+          </div>
+          <div class="mb-3">
+            <label for="apellidos">Apellidos</label>
+            <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
+          </div>
+          <div class="mb-3">
+            <label for="numeroTelefonico">Número Telefónico</label>
+            <input id="numeroTelefonico" type="text" class="form-control" formControlName="numeroTelefonico">
+          </div>
+          <div class="mb-3">
+            <label for="fechaNacimiento">Fecha Nacimiento</label>
+            <input id="fechaNacimiento" type="date" class="form-control" formControlName="fechaNacimiento">
+          </div>
+          <div class="mb-3">
+            <label for="ciudad">Ciudad</label>
+            <input id="ciudad" type="text" class="form-control" formControlName="ciudad">
+          </div>
+          <div class="mb-3">
+            <label for="estado">Estado</label>
+            <input id="estado" type="text" class="form-control" formControlName="estado">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</ng-template>

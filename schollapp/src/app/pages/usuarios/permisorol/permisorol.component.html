@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- Breadcrumb Header -->
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="card-title mb-0">PERMISOS</h4>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-decoration-none">Usuarios</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Permisos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- Header con Mantenedor de Permisos y botón Guardar Cambios -->
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h5 class="mb-0">Mantenedor de Permisos</h5>
+                    <button type="button" 
+                            class="btn btn-success"
+                            (click)="guardarCambios()"
+                            [disabled]="loading || !rolSeleccionado"
+                            title="Guardar cambios realizados">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        <i *ngIf="!loading" class="ri-save-line me-1"></i>
+                        Guardar Cambios
+                    </button>
+                </div>
+
+                <!-- Selector de Rol -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label for="rolSelector" class="form-label">Seleccion Rol:</label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="rolSelector"
+                                   class="form-control" 
+                                   [(ngModel)]="rolSeleccionadoNombre"
+                                   readonly
+                                   placeholder="OWNER"
+                                   [disabled]="loading">
+                            <select class="form-select d-none" 
+                                    [(ngModel)]="rolSeleccionado"
+                                    (change)="onRolChange()">
+                                <option value="">Seleccionar...</option>
+                                <option *ngFor="let rol of roles" 
+                                        [value]="rol.IdRol">
+                                    {{ rol.Descripcion }}
+                                </option>
+                            </select>
+                            <button type="button" 
+                                    class="btn btn-primary"
+                                    (click)="abrirSelectorRol()"
+                                    [disabled]="loading"
+                                    title="Seleccionar rol">
+                                ...
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-info"
+                                    (click)="buscarPermisos()"
+                                    [disabled]="!rolSeleccionado || loading"
+                                    title="Recargar permisos del rol seleccionado (la carga es automática al cambiar de rol)">
+                                <i class="ri-refresh-line me-1"></i>
+                                Recargar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de permisos con DataTables -->
+                <div class="table-responsive" *ngIf="mostrarTabla">
+                    <table class="table table-nowrap table-striped-columns mb-0" 
+                           datatable 
+                           [dtOptions]="dtOptions" 
+                           [dtTrigger]="dtTrigger"
+                           style="width: 100%;">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 50px;">#</th>
+                                <th style="width: 80px;">Activar</th>
+                                <th>Menu</th>
+                                <th>Sub Menu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargan vía DataTables con Ajax -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Estado sin datos -->
+                <div *ngIf="!mostrarTabla && !loading" 
+                     class="text-center py-5">
+                    <i class="ri-shield-user-line fs-1 text-muted d-block mb-3"></i>
+                    <h6 class="text-muted">Seleccione un rol para ver sus permisos</h6>
+                    <p class="text-muted mb-0">Los permisos se cargarán automáticamente al seleccionar un rol</p>
+                </div>
+
+                <!-- Estado de carga -->
+                <div *ngIf="loading" class="text-center py-5">
+                    <output class="spinner-border text-primary">
+                        <span class="visually-hidden">Cargando...</span>
+                    </output>
+                    <p class="text-muted mt-2 mb-0">Cargando permisos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

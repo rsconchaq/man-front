@@ -1,0 +1,36 @@
+<!-- Start Breadcrumbs -->
+<!-- <app-breadcrumbs title="DASHBOARD" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col">
+
+        <div class="h-100">
+            <div class="row mb-3 pb-1">
+                <div class="col-12">
+                    <div class="d-flex align-items-lg-center flex-lg-row flex-column">
+                        <div class="flex-grow-1">
+                            <h4 class="fs-16 mb-1">Bienvenido</h4>
+                             
+                        </div>
+                       
+                    </div><!-- end card header -->
+                </div><!--end col-->
+            </div><!--end row-->
+
+            <div class="row">
+                @for(stat of statData; track $index){
+                <div class="col-xl-3 col-md-6">
+                    <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"
+                        [persantage]="stat.persantage" [profit]="stat.profit" [link]="stat.link"></app-stat>
+                </div>
+            }
+            </div> <!-- end row-->
+ 
+        </div> <!-- end .h-100-->
+
+    </div> <!-- end col -->
+
+
+</div>
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

@@ -1,0 +1,787 @@
+<div class="profile-foreground position-relative mx-n4 mt-n4">
+    <div class="profile-wid-bg">
+        <img src="assets/images/profile-bg.jpg" alt="" class="profile-wid-img" />
+    </div>
+</div>
+<div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
+ 
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div>
+            <div class="d-flex profile-wrapper">
+                <!-- Nav tabs -->
+                <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                    class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1">
+                    <li [ngbNavItem]="1" class="nav-item">
+                        <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                            <i class="ri-airplay-fill d-inline-block d-md-none"></i> <span
+                                class="d-none d-md-inline-block">Detalle del Alumno</span>
+                        </a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body" [formGroup]="alumnoForm">
+                                            <h5 class="card-title mb-5">Detalle del Alumno</h5>
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="documentoIdentidad">Documento Identidad</label>
+                                                    <input id="documentoIdentidad" type="text" class="form-control" formControlName="documentoIdentidad" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="nombres">Nombres</label>
+                                                    <input id="nombres" type="text" class="form-control" formControlName="nombres" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="fechaNacimiento">Fecha Nacimiento</label>
+                                                    <input id="fechaNacimiento" type="date" class="form-control" formControlName="fechaNacimiento" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="ciudad">Ciudad</label>
+                                                    <input id="ciudad" type="text" class="form-control" formControlName="ciudad" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="diagnostico">Diagnóstico</label>
+                                                    <input id="diagnostico" type="text" class="form-control" formControlName="diagnostico" readonly>
+                                                </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="codigo">Código</label>
+                                                    <input id="codigo" type="text" class="form-control" formControlName="codigo" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="apellidos">Apellidos</label>
+                                                    <input id="apellidos" type="text" class="form-control" formControlName="apellidos" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="edad">Edad</label>
+                                                    <input id="edad" type="number" class="form-control" formControlName="edad" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="sexo">Sexo</label>
+                                                    <select id="sexo" class="form-select" formControlName="sexo" readonly>
+                                                    <option value="">Seleccione</option>
+                                                    <option value="MASCULINO">Masculino</option>
+                                                    <option value="FEMENINO">Femenino</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="direccion">Dirección</label>
+                                                    <input id="direccion" type="text" class="form-control" formControlName="direccion" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="observacion">Observación</label>
+                                                    <input id="observacion" type="text" class="form-control" formControlName="observacion" readonly>
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">Principal</div>
+                                                    <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_documentoIdentidad">Documento Identidad</label>
+                                                            <input id="apoderadoPrincipal_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoPrincipal_documentoIdentidad" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_nombres">Nombres</label>
+                                                            <input id="apoderadoPrincipal_nombres" type="text" class="form-control" formControlName="apoderadoPrincipal_nombres" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_telefono1">Teléfono 1</label>
+                                                            <input id="apoderadoPrincipal_telefono1" type="text" class="form-control" formControlName="apoderadoPrincipal_telefono1" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_correo">Correo</label>
+                                                            <input id="apoderadoPrincipal_correo" type="email" class="form-control" formControlName="apoderadoPrincipal_correo" readonly>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_tipoRelacion">Tipo Relación</label>
+                                                            <input id="apoderadoPrincipal_tipoRelacion" type="text" class="form-control" formControlName="apoderadoPrincipal_tipoRelacion" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_apellidos">Apellidos</label>
+                                                            <input id="apoderadoPrincipal_apellidos" type="text" class="form-control" formControlName="apoderadoPrincipal_apellidos" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoPrincipal_telefono2">Teléfono 2</label>
+                                                            <input id="apoderadoPrincipal_telefono2" type="text" class="form-control" formControlName="apoderadoPrincipal_telefono2" readonly>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header">Secundario</div>
+                                                    <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_documentoIdentidad">Documento Identidad</label>
+                                                            <input id="apoderadoSecundario_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoSecundario_documentoIdentidad" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_nombres">Nombres</label>
+                                                            <input id="apoderadoSecundario_nombres" type="text" class="form-control" formControlName="apoderadoSecundario_nombres" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_telefono1">Teléfono 1</label>
+                                                            <input id="apoderadoSecundario_telefono1" type="text" class="form-control" formControlName="apoderadoSecundario_telefono1" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_correo">Correo</label>
+                                                            <input id="apoderadoSecundario_correo" type="email" class="form-control" formControlName="apoderadoSecundario_correo" readonly>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_tipoRelacion">Tipo Relación</label>
+                                                            <input id="apoderadoSecundario_tipoRelacion" type="text" class="form-control" formControlName="apoderadoSecundario_tipoRelacion" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_apellidos">Apellidos</label>
+                                                            <input id="apoderadoSecundario_apellidos" type="text" class="form-control" formControlName="apoderadoSecundario_apellidos" readonly>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="apoderadoSecundario_telefono2">Teléfono 2</label>
+                                                            <input id="apoderadoSecundario_telefono2" type="text" class="form-control" formControlName="apoderadoSecundario_telefono2" readonly>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+ 
+
+                           
+                            
+                                </div><!--end col-->
+                             
+                            </div><!--end row-->
+                        </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2" class="nav-item">
+                        <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                            <i class="ri-list-unordered d-inline-block d-md-none"></i> <span
+                                class="d-none d-md-inline-block">Talleres Matriculados</span>
+                        </a>
+                        <ng-template ngbNavContent>
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Talleres Matriculados</h4>
+                                    <div class="flex-shrink-0">
+                                        <span class="badge bg-primary">{{ talleresList.length }} Talleres</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th class="text-center" style="width: 50px;">#</th>
+                                                    <th>Taller</th>
+                                                    <th style="width: 120px;">Local</th>
+                                                    <th style="width: 180px;">Etapa</th>
+                                                    <th style="width: 140px;">Grupo</th>
+                                                    <th class="text-center" style="width: 130px;">Fecha Inicio</th>
+                                                    <th class="text-center" style="width: 130px;">Fecha Fin</th>
+                                                    <th class="text-center" style="width: 100px;">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let taller of talleresList; let i = index">
+                                                    <td class="text-center fw-semibold">{{ i + 1 }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <i class="ri-book-2-line text-primary fs-16"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="fs-14 mb-0">{{ taller.idMatricula }} - {{ taller.descripcion }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-info-subtle text-info">{{ taller.descripcionLocal }}</span>
+                                                    </td>
+                                                    <td>{{ taller.descripcionEtapa }}</td>
+                                                    <td>
+                                                        <span class="badge bg-warning-subtle text-warning">{{ taller.descripcionGrupo }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <i class="ri-calendar-line text-muted me-1"></i>
+                                                        {{ taller.fechaInicio | date: 'dd-MM-yyyy' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <i class="ri-calendar-line text-muted me-1"></i>
+                                                        {{ taller.fechaFin | date: 'dd-MM-yyyy' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="d-flex gap-2 justify-content-center">
+                                                            <button class="btn btn-sm btn-success" title="Ver Detalle" (click)="abrirDetalleTaller(taller)">
+                                                                <i class="ri-eye-line"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="talleresList.length === 0">
+                                                    <td colspan="8" class="text-center py-5">
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <i class="ri-calendar-close-line text-muted fs-1 mb-3"></i>
+                                                            <h5 class="text-muted mb-1">No hay talleres matriculados</h5>
+                                                            <p class="text-muted mb-0">El alumno aún no está matriculado en ningún taller</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--end card-body-->
+                            </div><!--end card-->
+                        </ng-template>
+                    </li>
+               
+                 
+                </ul>
+            
+            </div>
+            <!-- Tab panes -->
+            <div class="tab-content pt-4 text-muted">
+                <div [ngbNavOutlet]="customNav"></div>
+            </div><!--end tab-content-->
+        </div>
+    </div><!--end col-->
+</div><!--end row-->
+
+<!-- Modal Detalle Taller -->
+<ng-template #tallerDetalleModal>
+    <div class="modal-header">
+        <h5 class="modal-title">Detalle del Taller - {{ tallerSeleccionado?.taller }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+    </div>
+    <div class="modal-body">
+        <ul ngbNav #navModal="ngbNav" [(activeId)]="activeTabModal" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>
+                    <i class="ri-clipboard-line me-1"></i> Seguimiento de Sesiones
+                </a>
+                <ng-template ngbNavContent>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 75px;">Sesión</th>
+                                    <th style="width: 90px;"> Fecha Inicio</th>
+                                    <th style="width: 90px;">Fecha Fin</th>
+                                    <th>Asistencia</th>
+                                    <th>Observación</th>
+                                    <th>Individual</th>
+                                    <th>Mixto</th>
+                                    <th>Grupal</th>
+                                    <th>Seguimiento 4</th>
+                                    <th>Seguimiento 5</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let sesion of seguimientoList">
+                                    <td>{{ sesion.descripcionSesion }}</td>
+                                    <td>{{ sesion.fechaInicio | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{ sesion.fechaFin | date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                         <select class="form-select form-select-sm" [(ngModel)]="sesion.asistencia">
+                                            <option value="0">Seleccione</option>
+                                            <option value="P">Presente</option>
+                                            <option value="A">Ausente</option>
+                                            <option value="J">Justificado</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento1">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento2">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento3">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento4">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento6">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="sesion.seguimiento7">
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-warning" title="Actualizar" (click)="actualizarSeguimiento(sesion)">
+                                             <i class="ri-refresh-line"></i>
+                                            
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>
+                    <i class="ri-money-dollar-circle-line me-1"></i> Cuotas de Matrícula
+                </a>
+                <ng-template ngbNavContent>
+                    <div class="mt-3">
+                        <!-- Tabla de Matrícula -->
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="ri-file-list-3-line me-1"></i> Matrícula</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                 <th style="width: 120px;">Concepto</th>
+                                                <th>Monto</th>
+                                                <th>Fecha Vencimiento</th>
+                                                 <th>Estado</th>
+                                                <th>Observación</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cuota of cuotasList; let i = index">
+                                                <ng-container *ngIf="cuota.numeroCuota === 0">
+                                                    <!-- <td class="text-center">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="form-check-input" 
+                                                            [(ngModel)]="cuota.seleccionadoPagar"
+                                                            [disabled]="cuota.estadoPago === 'Pagado'"
+                                                            (change)="onCheckPagarChange(cuota)">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="form-check-input" 
+                                                            [(ngModel)]="cuota.seleccionadoBoleta"
+                                                            [disabled]="cuota.estadoPago !== 'Pagado'"
+                                                            (change)="onCheckBoletaChange(cuota)">
+                                                    </td> -->
+                                                    <td class="fw-semibold">
+                                                        <span class="badge bg-primary">Matrícula</span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="cuota.monto">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control form-control-sm" [(ngModel)]="cuota.fechaVencimiento " [disabled]="true"> 
+                                                    </td>
+                                                     
+                                                    <td>
+                                                        <select class="form-select form-select-sm" [(ngModel)]="cuota.estadoPago" [disabled]="true">
+                                                            <option value="">Seleccione</option>
+                                                            <option value="Pendiente">Pendiente</option>
+                                                            <option value="Pagado Parcial">Pagado Parcial</option>
+                                                            <option value="Pagado">Pagado</option>
+                                                            <option value="Vencido">Vencido</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="cuota.observacion" placeholder="Observación">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                                            <button 
+                                                                class="btn btn-sm btn-info" 
+                                                                title="Dividir Cuota" 
+                                                                *ngIf="cuota.divisiones && cuota.divisiones.length == 0"
+                                                                (click)="dividirCuota(cuota, i)">
+                                                                
+                                                                <i class="ri-split-cells-horizontal"></i>
+                                                            </button>
+                                                            <button 
+                                                                *ngIf="cuota.divisiones && cuota.divisiones.length > 0"
+                                                                class="btn btn-sm btn-warning" 
+                                                                [title]="estaExpandida(i) ? 'Ocultar divisiones' : 'Ver divisiones'" 
+                                                                (click)="toggleExpansionCuota(i)">
+                                                                <i [class]="estaExpandida(i) ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-success" title="Guardar" (click)="registrarCuotaPago(cuota, i)">
+                                                                <i class="ri-save-line"></i>
+                                                            </button>
+                                                            <button 
+                                                                class="btn btn-sm btn-danger" 
+                                                                [disabled]="cuota.estadoPago === 'Pagado'"
+                                                                *ngIf="i !== 0"
+                                                                [title]="cuota.estadoPago === 'Pagado' ? 'No se puede eliminar una cuota pagada' : 'Eliminar'" 
+                                                                (click)="eliminarCuota(i)">
+                                                                <i class="ri-delete-bin-line"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <!-- Fila expandible con divisiones de la matrícula -->
+                                            <tr *ngFor="let cuota of cuotasList; let i = index">
+                                                <ng-container *ngIf="cuota.numeroCuota === 0 && estaExpandida(i) && cuota.divisiones && cuota.divisiones.length > 0">
+                                                    <td colspan="9" class="p-0">
+                                                        <div class="bg-light p-3">
+                                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                                <h6 class="text-primary mb-0"><i class="ri-file-list-line me-1"></i> Divisiones de la Matrícula</h6>
+                                                                <button class="btn btn-sm btn-primary" (click)="agregarDivision(cuota, i)">
+                                                                    <i class="ri-add-line me-1"></i> Agregar División
+                                                                </button>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-sm table-bordered mb-0">
+                                                                    <thead class="table-secondary">
+                                                                        <tr>
+                                                                            <th class="text-center" style="width: 50px;">Pagar</th>
+                                                                            <th class="text-center" style="width: 50px;">Boleta</th>
+                                                                            <th style="width: 100px;">División</th>
+                                                                            <th>Monto</th>
+                                                                            <th>Fecha Vencimiento</th>
+                                                                            <th>Tipo Pago</th>
+                                                                            <th>Estado</th>
+                                                                            <th>Observación</th>
+                                                                            <th class="text-center">Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let division of cuota.divisiones; let j = index" class="bg-white">
+                                                                            <td class="text-center">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    class="form-check-input" 
+                                                                                    [(ngModel)]="division.seleccionadoPagar"
+                                                                                    [disabled]="division.estadoPago === 'Pagado'"
+                                                                                    (change)="onCheckPagarChange(division)"
+                                                                                    (change)="onCheckBoletaChange(division)">
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    class="form-check-input" 
+                                                                                    [(ngModel)]="division.seleccionadoBoleta"
+                                                                                    [disabled]="division.estadoPago !== 'Pagado'">
+                                                                            </td>
+                                                                            <td class="fw-semibold">
+                                                                                <span class="badge bg-info">Div. {{ division.nroDivision }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="number" class="form-control form-control-sm" [(ngModel)]="division.monto" step="0.01" (focusout)="calcularTotalDivisiones(cuota,division,j)">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" class="form-control form-control-sm" type="text" [(ngModel)]="division.fechaVencimiento">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="form-select form-select-sm" [(ngModel)]="division.tipoPago" [disabled]="true">
+                                                                                    <option value="0">Seleccione</option>
+                                                                                    <option value="1">Pago Efectivo</option>
+                                                                                    <option value="2">Pago Post</option>
+                                                                                    <option value="3">Pago Yape</option>
+ -                                                                                  <option value="4">Pago Link</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="form-select form-select-sm" [(ngModel)]="division.estadoPago" [disabled]="true">
+                                                                                    <option value="">Seleccione</option>
+                                                                                    <option value="Pendiente">Pendiente</option>
+                                                                                    <option value="Pagado Parcial">Pagado Parcial</option>
+                                                                                    <option value="Pagado">Pagado</option>
+                                                                                    <option value="Vencido">Vencido</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control form-control-sm" [(ngModel)]="division.observacion" placeholder="Observación">
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <button class="btn btn-sm btn-success" title="Guardar" (click)="registrarCuotaPagoDetalle(cuota, division, j)">
+                                                                                    <i class="ri-save-line"></i>
+                                                                                </button>
+                                                                                <button 
+                                                                                    class="btn btn-sm btn-danger" 
+                                                                                    title="Eliminar División"
+                                                                                    *ngIf="j !== 0"
+                                                                                    (click)="eliminarDivision(cuota, division, j)">
+                                                                                    <i class="ri-delete-bin-line"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                                <!-- Mensaje cuando no hay divisiones pero está expandida -->
+                                                <ng-container *ngIf="cuota.numeroCuota === 0 && estaExpandida(i) && (!cuota.divisiones || cuota.divisiones.length === 0)">
+                                                    <td colspan="9" class="p-0">
+                                                        <div class="bg-light p-4 text-center">
+                                                            <i class="ri-inbox-line text-muted fs-2 d-block mb-2"></i>
+                                                            <p class="text-muted mb-3">No hay divisiones. Haga clic para agregar una.</p>
+                                                            <button class="btn btn-sm btn-primary" (click)="agregarDivision(cuota, i)">
+                                                                <i class="ri-add-line me-1"></i> Agregar Primera División
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción para cuotas -->
+                        <div class="d-flex gap-2 mb-3">
+                            <button class="btn btn-success btn-sm" (click)="agregarCuota()">
+                                <i class="ri-add-line me-1"></i> Agregar Cuota
+                            </button>
+                            <button 
+                                class="btn btn-primary btn-sm" 
+                                [disabled]="!hayChecksPagarSeleccionados"
+                                (click)="pagarCuotasSeleccionadas()">
+                                <i class="ri-money-dollar-circle-line me-1"></i> Pagar Seleccionadas
+                            </button>
+                            <button 
+                                class="btn btn-info btn-sm" 
+                                [disabled]="!hayChecksBoletaSeleccionados"
+                                (click)="imprimirBoletasSeleccionadas()">
+                                <i class="ri-printer-line me-1"></i> Imprimir Boleta
+                            </button>
+                        </div>
+
+                        <!-- Tabla de Cuotas -->
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="ri-money-dollar-circle-line me-1"></i> Cuotas de Pago</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                            <table class="table table-bordered table-sm mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>N° Cuota</th>
+                                                <th>Monto</th>
+                                                <th>Fecha Vencimiento</th>
+                                                 <th>Estado</th>
+                                                <th>Observación</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cuota of cuotasList; let i = index">
+                                                <ng-container *ngIf="cuota.numeroCuota !== 0">
+                                                    <!-- <td class="text-center">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="form-check-input" 
+                                                            [(ngModel)]="cuota.seleccionadoPagar"
+                                                            [disabled]="cuota.estadoPago === 'Pagado'"
+                                                            (change)="onCheckPagarChange(cuota)">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="form-check-input" 
+                                                            [(ngModel)]="cuota.seleccionadoBoleta"
+                                                            [disabled]="cuota.estadoPago !== 'Pagado'"
+                                                            (change)="onCheckBoletaChange(cuota)">
+                                                    </td> -->
+                                                    <td class="fw-semibold">{{ cuota.numeroCuota }}</td>
+                                                    <td>
+                                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="cuota.monto">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control form-control-sm" [(ngModel)]="cuota.fechaVencimiento" [disabled]="true">
+                                                    </td>
+                                                     
+                                                    <td>
+                                                        <select class="form-select form-select-sm" [(ngModel)]="cuota.estadoPago" [disabled]="true">
+                                                            <option value="">Seleccione</option>
+                                                            <option value="Pendiente">Pendiente</option>
+                                                            <option value="Pagado Parcial">Pagado Parcial</option>
+                                                            <option value="Pagado">Pagado</option>
+                                                            <option value="Vencido">Vencido</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="cuota.observacion" placeholder="Observación">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                                             
+                                                            <button 
+                                                                class="btn btn-sm btn-info" 
+                                                                title="Dividir Cuota" 
+                                                                *ngIf="cuota.divisiones && cuota.divisiones.length == 0"
+                                                                (click)="dividirCuota(cuota, i)">
+                                                                <i class="ri-split-cells-horizontal"></i>
+                                                                
+                                                            </button>
+                                                            <button 
+                                                                *ngIf="cuota.divisiones && cuota.divisiones.length > 0"
+                                                                class="btn btn-sm btn-warning" 
+                                                                [title]="estaExpandida(i) ? 'Ocultar divisiones' : 'Ver divisiones'" 
+                                                                (click)="toggleExpansionCuota(i)">
+                                                                <i [class]="estaExpandida(i) ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-success" title="Guardar" (click)="registrarCuotaPago(cuota, i)">
+                                                                <i class="ri-save-line"></i>
+                                                            </button>
+                                                            <button 
+                                                                class="btn btn-sm btn-danger" 
+                                                                *ngIf="i !== 1"
+                                                                [disabled]="cuota.estadoPago === 'Pagado'"
+                                                                [title]="cuota.estadoPago === 'Pagado' ? 'No se puede eliminar una cuota pagada' : 'Eliminar'" 
+                                                                (click)="eliminarCuota(i)">
+                                                                <i class="ri-delete-bin-line"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <!-- Fila expandible con divisiones de cuotas -->
+                                            <tr *ngFor="let cuota of cuotasList; let i = index">
+                                                <ng-container *ngIf="cuota.numeroCuota !== 0 && estaExpandida(i) && cuota.divisiones && cuota.divisiones.length > 0">
+                                                    <td colspan="9" class="p-0">
+                                                        <div class="bg-light p-3">
+                                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                                <h6 class="text-success mb-0"><i class="ri-file-list-line me-1"></i> Divisiones de la Cuota #{{ cuota.numeroCuota }}</h6>
+                                                                <button class="btn btn-sm btn-success" (click)="agregarDivision(cuota, i)">
+                                                                    <i class="ri-add-line me-1"></i> Agregar División
+                                                                </button>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-sm table-bordered mb-0">
+                                                                    <thead class="table-secondary">
+                                                                        <tr>
+                                                                            <th class="text-center" style="width: 50px;">Pagar</th>
+                                                                            <th class="text-center" style="width: 50px;">Boleta</th>
+                                                                            <th style="width: 100px;">División</th>
+                                                                            <th>Monto</th>
+                                                                            <th>Fecha Vencimiento</th>
+                                                                            <th>Tipo Pago</th>
+                                                                            <th>Estado</th>
+                                                                            <th>Observación</th>
+                                                                            <th class="text-center">Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let division of cuota.divisiones; let j = index" class="bg-white">
+                                                                            <td class="text-center">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    class="form-check-input" 
+                                                                                    [(ngModel)]="division.seleccionadoPagar" 
+                                                                                    [disabled]="division.estadoPago === 'Pagado'"
+                                                                                    (change)="onCheckPagarChange(division)">
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    class="form-check-input" 
+                                                                                    [(ngModel)]="division.seleccionadoBoleta"
+                                                                                    [disabled]="division.estadoPago !== 'Pagado'"
+                                                                                    (change)="onCheckBoletaChange(division)">
+                                                                            </td>
+                                                                            <td class="fw-semibold">
+                                                                                <span class="badge bg-info">Div. {{ division.nroDivision }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="number" class="form-control form-control-sm" [(ngModel)]="division.monto" step="0.01" (focusout)="calcularTotalDivisiones(cuota, division,j)">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="date" class="form-control form-control-sm" [(ngModel)]="division.fechaVencimiento">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="form-select form-select-sm" [(ngModel)]="division.tipoPago" [disabled]="true">
+                                                                                    <option value="0">Seleccione</option>
+                                                                                    <option value="1">Pago Efectivo</option>
+                                                                                    <option value="2">Pago Post</option>
+                                                                                    <option value="3">Pago Yape</option>
+ -                                                                                  <option value="4">Pago Link</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="form-select form-select-sm" [(ngModel)]="division.estadoPago" [disabled]="true">
+                                                                                    <option value="">Seleccione</option>
+                                                                                    <option value="Pendiente">Pendiente</option>
+                                                                                    <option value="Pagado Parcial">Pagado Parcial</option>
+                                                                                    <option value="Pagado">Pagado</option>
+                                                                                    <option value="Vencido">Vencido</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control form-control-sm" [(ngModel)]="division.observacion" placeholder="Observación">
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <button class="btn btn-sm btn-success" title="Guardar" (click)="registrarCuotaPagoDetalle(cuota, division, j)">
+                                                                                <i class="ri-save-line"></i>
+                                                                                </button>
+                                                                                <button 
+                                                                                    class="btn btn-sm btn-danger" 
+                                                                                    title="Eliminar División"
+                                                                                     *ngIf="j !== 0"
+                                                                                    (click)="eliminarDivision(cuota,division, j)">
+                                                                                    <i class="ri-delete-bin-line"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                                <!-- Mensaje cuando no hay divisiones pero está expandida -->
+                                                <ng-container *ngIf="cuota.numeroCuota !== 0 && estaExpandida(i) && (!cuota.divisiones || cuota.divisiones.length === 0)">
+                                                    <td colspan="9" class="p-0">
+                                                        <div class="bg-light p-4 text-center">
+                                                            <i class="ri-inbox-line text-muted fs-2 d-block mb-2"></i>
+                                                            <p class="text-muted mb-3">No hay divisiones. Haga clic para agregar una.</p>
+                                                            <button class="btn btn-sm btn-success" (click)="agregarDivision(cuota, i)">
+                                                                <i class="ri-add-line me-1"></i> Agregar Primera División
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr *ngIf="cuotasList.length <= 1">
+                                                <td colspan="9" class="text-center text-muted py-3">
+                                                    <i class="ri-money-dollar-circle-line fs-2 d-block mb-2"></i>
+                                                    No hay cuotas registradas. Haga clic en "Agregar Cuota" para añadir una.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="navModal" class="mt-2"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

@@ -1,0 +1,123 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Apertura de Talleres</span>
+    <button class="btn btn-primary">Guardar Apertura</button>
+  </div>
+  <div class="card-body">
+    <form class="row mb-3">
+      <div class="col-md-4">
+        <label for="localSelect">Local</label>
+        <select id="localSelect" class="form-control" (change)="onLocalChange($event)">
+            <option value="">SELECCIONE</option>
+            <option *ngFor="let local of listaLocal" [value]="local.id">{{ local.descripcion }}</option>
+          </select>
+      </div>
+      <div class="col-md-4">
+        <label for="etapaSelect">Etapa</label>
+        <select id="etapaSelect" class="form-control" (change)="onEtapaChange($event)">
+           <option value="">SELECCIONE</option>
+            <option *ngFor="let etapa of listaEtapaFiltrar" [value]="etapa.id">{{ etapa.descripcionEtapa }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="grupoSelect">Grupo</label>
+        <select id="grupoSelect" class="form-control" (change)="onGrupoChange($event)">
+            <option value="">SELECCIONE</option>
+            <option *ngFor="let grupo of listaGrupo" [value]="grupo.idGrupo">{{ grupo.descripcionGrupo }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="aulaSelect">Aula</label>
+        <select id="aulaSelect" class="form-control">
+            <option value="">SELECCIONE</option>
+            <option *ngFor="let aula of listaAulaFiltrada" [value]="aula.id">{{ aula.descripcionAula }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="tallerSelect">Taller</label>
+        <select id="tallerSelect" class="form-control">
+          <option value="">SELECCIONE</option>
+          <option *ngFor="let taller of listaTaller" [value]="taller.id">{{ taller.descripcion }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="vacantesInput">Vacantes</label>
+        <input id="vacantesInput" type="number"  class="form-control" placeholder="" />
+      </div>
+      <div class="col-md-4">
+        <label for="aperturaClase0">&nbsp;</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="aperturaClase0" />
+          <label class="form-check-label" for="aperturaClase0">Aperturar Clase 0</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="fechaInicio">Fecha Inicio</label>
+        <input id="fechaInicio" class="form-control" type="date" (change)="onDiaSemanaChange($event)" />
+      </div>
+      <div class="col-md-4">
+        <label for="diaSemanaSelect">Dia Semana</label>
+
+        <select id="diaSemanaSelect" class="form-control">
+            <option value="">SELECCIONE</option>
+            <OPTION value="Lunes">Lunes</OPTION>
+            <OPTION value="Martes">Martes</OPTION>
+            <OPTION value="Miercoles">Miercoles</OPTION>
+            <OPTION value="Jueves">Jueves</OPTION>
+            <OPTION value="Viernes">Viernes</OPTION>
+            <OPTION value="Sabado">Sabado</OPTION>
+            <OPTION value="Domingo">Domingo</OPTION>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="horaInicio">Hora Inicio</label>
+        <input id="horaInicio" class="form-control" placeholder=""  type="time"/>
+      </div>
+      <div class="col-md-4">
+        <label for="horaFin">Hora Fin</label>
+        <input id="horaFin" class="form-control" placeholder="" type="time" />
+      </div>
+      <div class="col-md-12">
+        <label for="descripcionTaller">Descripcion Taller</label>
+        <input id="descripcionTaller" class="form-control" placeholder="" />
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover w-100">
+        <thead>
+          <tr>
+            <th>IdApertura</th>
+            <th>Nombre Taller</th>
+            <th>Local</th>
+            <th>Etapa</th>
+            <th>Grupo</th>
+            <th>Vacantes Total</th>
+            <th>Vacantes Disponibles</th>
+            <th>Dia Semana</th>
+            <th>Fecha Hora Inicio</th>
+            <th>Fecha Hora Fin</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of lista">
+            <td>{{ item.id }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.localDescripcion }}</td>
+            <td>{{ item.etapaDescripcion }}</td>
+            <td>{{ item.grupoDescripcion }}</td>
+            <td>{{ item.vacantesTotal }}</td>
+            <td>{{ item.vacantesDisponibles }}</td>
+            <td>{{ item.diaSemana }}</td>
+            <td>{{ item.fechaHoraInicio }}</td>
+            <td>{{ item.fechaHoraFin }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" (click)="editar(item)"><i class="ri-edit-line"></i></button>
+              <button class="btn btn-sm btn-danger" (click)="view(item)"><i class="ri-delete-bin-line"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">ETAPAS</h4>
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <li class="breadcrumb-item">Configuraciones</li>
+          <li class="breadcrumb-item active">Etapas</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Gestión de Etapas</h4>
+        <div class="flex-shrink-0">
+          <button class="btn btn-primary btn-sm" 
+                  (click)="abrirModalNuevo()"
+                  [disabled]="loading">
+            <i class="ri-add-line me-1"></i>
+            Nueva Etapa
+          </button>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <!-- Tabla de etapas con DataTables -->
+        <div class="table-responsive">
+          <table id="etapaTable"
+                 class="table table-striped table-hover w-100" 
+                 datatable 
+                 [dtOptions]="dtOptions" 
+                 [dtTrigger]="dtTrigger"
+                 style="width: 100%;">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Local</th>
+                <th>Descripción Etapa</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Los datos se cargan vía DataTables -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal template para NgbModal -->
+<ng-template #etapaModal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ editMode ? 'Editar Etapa' : 'Nueva Etapa' }}</h5>
+    <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="etapaForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Local -->
+      <div class="mb-3">
+        <label for="idLocal" class="form-label">Local <span class="text-danger">*</span></label>
+        <select class="form-select" 
+                id="idLocal"
+                formControlName="idLocal"
+                [class.is-invalid]="isFieldInvalid('idLocal')">
+          <option value="">Seleccione un local</option>
+          <option *ngFor="let local of locales" [value]="local.id">
+            {{local.descripcion}}
+          </option>
+        </select>
+        <div *ngIf="isFieldInvalid('idLocal')" class="invalid-feedback">
+          <small *ngIf="etapaForm.get('idLocal')?.errors?.['required']">
+            El local es requerido
+          </small>
+        </div>
+      </div>
+
+      <!-- Descripción Etapa -->
+      <div class="mb-3">
+        <label for="descripcionEtapa" class="form-label">Descripción Etapa <span class="text-danger">*</span></label>
+        <input type="text" 
+               class="form-control" 
+               id="descripcionEtapa"
+               formControlName="descripcionEtapa"
+               placeholder="Ingrese descripción de la etapa"
+               [class.is-invalid]="isFieldInvalid('descripcionEtapa')">
+        <div *ngIf="isFieldInvalid('descripcionEtapa')" class="invalid-feedback">
+          <small *ngIf="etapaForm.get('descripcionEtapa')?.errors?.['required']">
+            La descripción de la etapa es requerida
+          </small>
+          <small *ngIf="etapaForm.get('descripcionEtapa')?.errors?.['minlength']">
+            La descripción debe tener al menos 2 caracteres
+          </small>
+          <small *ngIf="etapaForm.get('descripcionEtapa')?.errors?.['maxlength']">
+            La descripción no debe exceder los 100 caracteres
+          </small>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" 
+                  id="descripcion"
+                  rows="3"
+                  formControlName="descripcion"
+                  placeholder="Ingrese descripción detallada"
+                  [class.is-invalid]="isFieldInvalid('descripcion')"></textarea>
+        <div *ngIf="isFieldInvalid('descripcion')" class="invalid-feedback">
+          <small *ngIf="etapaForm.get('descripcion')?.errors?.['maxlength']">
+            La descripción no debe exceder los 500 caracteres
+          </small>
+        </div>
+      </div>
+
+      <!-- Estado -->
+      <div class="mb-3">
+        <label for="activo" class="form-label">Estado <span class="text-danger">*</span></label>
+        <select class="form-select" 
+                id="activo"
+                formControlName="activo"
+                [class.is-invalid]="isFieldInvalid('activo')">
+          <option value="">Seleccione el estado</option>
+          <option value="true">ACTIVO</option>
+          <option value="false">INACTIVO</option>
+        </select>
+        <div *ngIf="isFieldInvalid('activo')" class="invalid-feedback">
+          <small *ngIf="etapaForm.get('activo')?.errors?.['required']">
+            El estado es requerido
+          </small>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+      Cancelar
+    </button>
+    <button type="button" 
+            class="btn btn-primary" 
+            (click)="onSubmit()"
+            [disabled]="loading || etapaForm.invalid">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+      {{ editMode ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </div>
+</ng-template>

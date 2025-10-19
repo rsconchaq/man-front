@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Gestión de Roles</h4>
+                <div class="flex-shrink-0">
+                    <button class="btn btn-primary btn-sm" 
+                            (click)="abrirModalNuevo()"
+                            [disabled]="loading">
+                        <i class="ri-add-line me-1"></i>
+                        Nuevo Rol
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <!-- Controles de tabla -->
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                       
+                    </div>
+                </div>
+
+                <!-- Tabla de roles con DataTables -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover w-100" 
+                           datatable 
+                           [dtOptions]="dtOptions" 
+                           [dtTrigger]="dtTrigger"
+                           style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargan vía DataTables con Ajax -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal template para NgbModal -->
+<ng-template #rolModal>
+    <div class="modal-header">
+        <h5 class="modal-title">{{ editMode ? 'Editar Rol' : 'Nuevo Rol' }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+    </div>
+    <form [formGroup]="rolForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" 
+                       id="descripcion"
+                       class="form-control" 
+                       formControlName="descripcion"
+                       [class.is-invalid]="isFieldInvalid('descripcion')"
+                       placeholder="Ingrese descripción del rol">
+                <div *ngIf="isFieldInvalid('descripcion')" class="invalid-feedback">
+                    <span *ngIf="rolForm.get('descripcion')?.errors?.['required']">La descripción es requerida</span>
+                    <span *ngIf="rolForm.get('descripcion')?.errors?.['minlength']">La descripción debe tener al menos 2 caracteres</span>
+                    <span *ngIf="rolForm.get('descripcion')?.errors?.['maxlength']">La descripción no puede exceder 100 caracteres</span>
+                    <span *ngIf="rolForm.get('descripcion')?.errors?.['pattern']">La descripción contiene caracteres no válidos</span>
+                </div>
+            </div>
+
+            <!-- Estado -->
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" 
+                        class="form-select" 
+                        formControlName="activo"
+                        [class.is-invalid]="isFieldInvalid('activo')">
+                    <option value="">Seleccione estado</option>
+                    <option [value]="true">ACTIVO</option>
+                    <option [value]="false">INACTIVO</option>
+                </select>
+                <div *ngIf="isFieldInvalid('activo')" class="invalid-feedback">
+                    El estado es requerido
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+                Cancelar
+            </button>
+            <button type="button" 
+                    class="btn btn-primary"
+                    [disabled]="rolForm.invalid || loading"
+                    (click)="onSubmit()">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                {{ editMode ? 'Actualizar' : 'Guardar' }}
+            </button>
+        </div>
+    </form>
+</ng-template>

@@ -1,0 +1,260 @@
+﻿<app-breadcrumbs title="Usuario" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="avatar-sm">
+                            <div class="avatar-title rounded-circle bg-light text-primary fs-20">
+                                <i class="ri-user-3-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="flex-grow-1">
+                        <h5 class="card-title mb-1">USUARIOS</h5>
+                        <p class="text-muted mb-0">
+                            <a routerLink="/usuarios" class="text-muted">Usuarios</a>
+                            <i class="mdi mdi-chevron-right"></i> usuario
+                        </p>
+                    </div> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Formulario de Usuario -->
+                <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" id="usuarioForm">
+                    <!-- Indicador de modo edición -->
+                    <div *ngIf="editMode" class="alert alert-info alert-dismissible fade show" role="alert">
+                        <i class="mdi mdi-information me-2"></i>
+                        <strong>Modo Edición:</strong> Editando usuario ID {{ currentEditId }}. 
+                        Los datos actuales han sido cargados en el formulario.
+                        <button type="button" class="btn-close" aria-label="Close" (click)="cancelarEdicion()"></button>
+                    </div>
+                    <div class="row">
+                        <!-- Datos Section -->
+                        <div class="col-12 mb-3">
+                            <h6 class="text-muted fw-normal mb-3">Datos</h6>
+                        </div>
+                        
+                        <!-- Nombres -->
+                        <div class="col-md-6 mb-3">
+                            <label for="nombres" class="form-label">Nombres <span class="text-danger">*</span></label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="nombres" 
+                                formControlName="nombres"
+                                [class.is-invalid]="isFieldInvalid('nombres')"
+                                placeholder="Ingrese nombres"
+                            />
+                            <div *ngIf="isFieldInvalid('nombres')" class="invalid-feedback">
+                                <div *ngIf="usuarioForm.get('nombres')?.errors?.['required']">Los nombres son requeridos</div>
+                                <div *ngIf="usuarioForm.get('nombres')?.errors?.['minlength']">Mínimo 2 caracteres</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Apellidos -->
+                        <div class="col-md-6 mb-3">
+                            <label for="apellidos" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="apellidos" 
+                                formControlName="apellidos"
+                                [class.is-invalid]="isFieldInvalid('apellidos')"
+                                placeholder="Ingrese apellidos"
+                            />
+                            <div *ngIf="isFieldInvalid('apellidos')" class="invalid-feedback">
+                                <div *ngIf="usuarioForm.get('apellidos')?.errors?.['required']">Los apellidos son requeridos</div>
+                                <div *ngIf="usuarioForm.get('apellidos')?.errors?.['minlength']">Mínimo 2 caracteres</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Usuario -->
+                        <div class="col-md-6 mb-3">
+                            <label for="loginUsuario" class="form-label">Usuario <span class="text-danger">*</span></label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="loginUsuario" 
+                                formControlName="loginUsuario"
+                                [class.is-invalid]="isFieldInvalid('loginUsuario')"
+                                placeholder="Ingrese usuario"
+                            />
+                            <div *ngIf="isFieldInvalid('loginUsuario')" class="invalid-feedback">
+                                <div *ngIf="usuarioForm.get('loginUsuario')?.errors?.['required']">El usuario es requerido</div>
+                                <div *ngIf="usuarioForm.get('loginUsuario')?.errors?.['minlength']">Mínimo 3 caracteres</div>
+                            </div>
+                        </div>
+                        
+                        <!-- ContraseÃ±a -->
+                        <div class="col-md-6 mb-3">
+                            <label for="loginClave" class="form-label">
+                                Contraseña
+                                <span *ngIf="!editMode" class="text-danger">*</span>
+                                <small *ngIf="editMode" class="text-muted">(Opcional - dejar vacío para mantener la actual)</small>
+                            </label>
+                            <div class="input-group">
+                                <input 
+                                    [type]="showPassword ? 'text' : 'password'" 
+                                    class="form-control" 
+                                    id="loginClave" 
+                                    formControlName="loginClave"
+                                    [class.is-invalid]="isFieldInvalid('loginClave')"
+                                    placeholder="Ingrese contraseÃ±a"
+                                />
+                                <button 
+                                    class="btn btn-outline-secondary" 
+                                    type="button" 
+                                    (click)="togglePassword()"
+                                >
+                                    <i [class]="showPassword ? 'ri-eye-off-line' : 'ri-eye-line'"></i>
+                                </button>
+                            </div>
+                            <div *ngIf="isFieldInvalid('loginClave')" class="invalid-feedback">
+                                <div *ngIf="usuarioForm.get('loginClave')?.errors?.['required']">La contraseña es requerida</div>
+                                <div *ngIf="usuarioForm.get('loginClave')?.errors?.['minlength']">Mínimo 6 caracteres</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rol -->
+                        <div class="col-md-6 mb-3">
+                            <label for="idRol" class="form-label">Rol <span class="text-danger">*</span></label>
+                            <select 
+                                class="form-select" 
+                                id="idRol" 
+                                formControlName="idRol"
+                                [class.is-invalid]="isFieldInvalid('idRol')"
+                            >
+                                <option value="">Seleccione un rol</option>
+                                <option *ngFor="let rol of roles" [value]="rol.IdRol">
+                                    {{ rol.Descripcion }}
+                                </option>
+                            </select>
+                            <div *ngIf="isFieldInvalid('idRol')" class="invalid-feedback">
+                                El rol es requerido
+                            </div>
+                        </div>
+                        
+                        <!-- Estado -->
+                        <div class="col-md-6 mb-3">
+                            <label for="activo" class="form-label">Estado</label>
+                            <select 
+                                class="form-select" 
+                                id="activo" 
+                                formControlName="activo"
+                            >
+                                <option [value]="true">Activo</option>
+                                <option [value]="false">Inactivo</option>
+                            </select>
+                        </div>
+                        
+                        <!-- DescripciÃ³n Referencia -->
+                        <div class="col-md-6 mb-3" style="display: none;">
+                            <label for="descripcionReferencia" class="form-label">Descripción Referencia</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="descripcionReferencia" 
+                                formControlName="descripcionReferencia"
+                                placeholder="Ingrese descripciÃ³n referencia"
+                            />
+                        </div>
+                        
+                        <!-- ID Referencia -->
+                        <div class="col-md-6 mb-3" style="display: none;">
+                            <label for="idReferencia" class="form-label">ID Referencia</label>
+                            <input 
+                                type="number" 
+                                class="form-control" 
+                                id="idReferencia" 
+                                formControlName="idReferencia"
+                                placeholder="Ingrese ID referencia"
+                            />
+                        </div>
+                        
+                        <!-- Botones -->
+                        <div class="col-12 text-end">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-light" 
+                                    (click)="limpiarFormulario()"
+                                    [disabled]="loading"
+                                >
+                                    <i class="ri-refresh-line me-1"></i>
+                                    Limpiar
+                                </button>
+                                <button 
+                                    *ngIf="editMode"
+                                    type="button" 
+                                    class="btn btn-outline-warning me-2" 
+                                    (click)="cancelarEdicion()"
+                                    [disabled]="loading"
+                                >
+                                    <i class="ri-close-line me-1"></i>
+                                    Cancelar Edición
+                                </button>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-primary" 
+                                    [disabled]="loading || usuarioForm.invalid"
+                                >
+                                    <i class="ri-save-line me-1" *ngIf="!loading"></i>
+                                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+                                    {{ editMode ? 'Actualizar' : 'Crear' }} Usuario
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla de Usuarios con DataTables -->
+<div class="row" *ngIf="mostrarTabla">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Lista de Usuarios</h5>
+            </div>
+            <div class="card-body">
+               <div class="row mb-3 table-responsive"> 
+
+                <!-- DataTable -->
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" 
+                       class="table table-bordered dt-responsive nowrap table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Usuario</th>
+                            <th>ContraseÃ±a</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se cargarÃ¡n vÃ­a AJAX -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading overlay -->
+<div *ngIf="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+     style="background-color: rgba(0,0,0,0.3); z-index: 9999;">
+    <div class="text-center text-white">
+        <div class="spinner-border text-primary mb-2" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <div>Cargando...</div>
+    </div>
+</div>

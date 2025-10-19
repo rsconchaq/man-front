@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Asignar Grupo a Etapa</span>
+    <button class="btn btn-primary">Guardar Cambios</button>
+  </div>
+  <div class="card-body">
+    <form class="row mb-3">
+      <div class="col-md-6">
+        <label for="localSelect">Locales</label>
+        <select id="localSelect" class="form-control" (change)="onLocalChange($event)">
+          <option value="">Seleccione un local</option>
+          <option *ngFor="let local of locales" [value]="local.id">
+              {{ local.descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="etapaSelect">Etapas</label>
+        <select id="etapaSelect" class="form-control" (change)="onEtapaChange($event)">
+          <option value="">Seleccione una etapa</option>
+          <option *ngFor="let etapa of etapasFiltradas" [value]="etapa.id">
+              {{ etapa.descripcionEtapa }}
+          </option>
+        </select>
+      </div>
+    </form>
+    <hr />
+    <div class="row">
+      <div class="col-md-12">
+        <dual-list
+         [key]="key"
+          [source]="source"
+          [destination]="confirmed"
+          [display]="display"
+          [filter]="filter"
+          [height]="'200px'"
+          (destinationChange)="onDualListChange($event)"
+           >
+        </dual-list>
+
+       
+      </div>
+    </div>
+  </div>
+</div>
