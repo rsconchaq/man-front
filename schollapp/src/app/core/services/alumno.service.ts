@@ -23,7 +23,7 @@ export class AlumnoService {
   }
 
   actualizarAlumno(id: number, alumno: Alumno): Observable<any> {
-    return this.http.put(`${GlobalComponent.API_URL}${GlobalComponent.ENPOINTS.ALUMNO.EDITAR}/${id}`, alumno, { headers: GlobalComponent.headerToken });
+    return this.http.put(`${GlobalComponent.API_URL}${GlobalComponent.ENPOINTS.ALUMNO.EDITAR}`, alumno, { headers: GlobalComponent.headerToken });
   }
 
   eliminarAlumno(id: number): Observable<any> {

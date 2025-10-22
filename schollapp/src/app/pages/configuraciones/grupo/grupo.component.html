@@ -64,6 +64,37 @@
   <form [formGroup]="grupoForm" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <!-- Descripción -->
+       <div class="mb-3">
+        <label for="edad1" class="form-label">Edad Desde <span class="text-danger">*</span></label>
+        <input type="number" 
+               id="edad1"
+               class="form-control" 
+               formControlName="edad1"
+               [class.is-invalid]="isFieldInvalid('edad1')"
+               placeholder="Ingrese edad desde"
+               (focusout)="validarRangoEdades()">
+        <div *ngIf="isFieldInvalid('edad1')" class="invalid-feedback">
+          <span *ngIf="grupoForm.get('edad1')?.errors?.['required']">La edad desde es requerida</span>
+          <span *ngIf="grupoForm.get('edad1')?.errors?.['min']">La edad desde debe ser al menos 0</span>
+          <span *ngIf="grupoForm.get('edad1')?.errors?.['max']">La edad desde no puede exceder 100</span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="edad2" class="form-label">Edad Hasta <span class="text-danger">*</span></label>
+        <input type="number" 
+               id="edad2"
+               class="form-control" 
+               formControlName="edad2"
+               [class.is-invalid]="isFieldInvalid('edad2')"
+               placeholder="Ingrese edad hasta"
+               (focusout)="validarRangoEdades()">
+        <div *ngIf="isFieldInvalid('edad2')" class="invalid-feedback">
+          <span *ngIf="grupoForm.get('edad2')?.errors?.['required']">La edad hasta es requerida</span>
+          <span *ngIf="grupoForm.get('edad2')?.errors?.['min']">La edad hasta debe ser al menos 0</span>
+          <span *ngIf="grupoForm.get('edad2')?.errors?.['max']">La edad hasta no puede exceder 100</span>
+          <span *ngIf="validarRangoEdades()">La edad hasta debe ser mayor o igual a la edad desde</span>
+        </div>
+      </div>
       <div class="mb-3">
         <label for="descripcionGrupo" class="form-label">Descripción <span class="text-danger">*</span></label>
         <input type="text" 

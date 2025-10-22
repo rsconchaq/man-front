@@ -11,7 +11,8 @@ import { Apoderado } from '../../../core/models/apoderado.model';
 import Swal from 'sweetalert2';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TallerService } from 'src/app/core/services/taller.service';
-
+import { ExternalApiService } from 'src/app/core/services/externalApi.service';
+ 
 
 
 export interface Cronograma  { 
@@ -83,6 +84,7 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
     private readonly alumnoService: AlumnoService,
     private readonly apoderadoService: ApoderadoService,
     private readonly tallerService: TallerService,
+    private readonly externalApiService: ExternalApiService,
     private readonly modalService: NgbModal
   ) {
     this.alumnoForm = this.formBuilder.group({
@@ -98,11 +100,11 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
       diagnostico: [''],
       observacion: [''],
       // Apoderado principal
-      apoderadoPrincipal_documentoIdentidad: [''],
-      apoderadoPrincipal_nombres: [''],
-      apoderadoPrincipal_apellidos: [''],
-      apoderadoPrincipal_tipoRelacion: [''],
-      apoderadoPrincipal_telefono1: [''],
+      apoderadoPrincipal_documentoIdentidad: ['', Validators.required],
+      apoderadoPrincipal_nombres: ['', Validators.required],
+      apoderadoPrincipal_apellidos: ['', Validators.required],
+      apoderadoPrincipal_tipoRelacion: ['', Validators.required],
+      apoderadoPrincipal_telefono1: ['', Validators.required],
       apoderadoPrincipal_telefono2: [''],
       apoderadoPrincipal_correo: [''],
       // Apoderado secundario
@@ -433,6 +435,9 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(): void {
+
+    this.alumnoForm.markAllAsTouched();
+
     if (this.alumnoForm.valid) {
       this.loading = true;
       const formData = this.alumnoForm.value;
@@ -474,6 +479,15 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
       }
     ];
       // Enviar datos al API
+
+      Swal.fire({
+        title : this.editMode ? 'Actualizando alumno...' : 'Creando alumno...',
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        allowOutsideClick: false
+      });
+
       if (this.editMode && this.currentEditId) {
         this.alumnoService.actualizarAlumno(this.currentEditId, { ...alumno, apoderados }).subscribe({
           next: (response) => {
@@ -526,6 +540,47 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
         this.alumnoForm.patchValue({ edad: '0' });
         this.alumnoForm.get('fechaNacimiento')?.setErrors({ invalid: true });
         this.alumnoForm.get('edad')?.setErrors({ invalid: true });  
+    }
+  }
+
+  onDocumentoIdentidadFocusOut(TIPO:any){
+    let documentoIdentidad = '';
+    if(TIPO === 'ALUMNO'){
+        documentoIdentidad = this.alumnoForm.get('documentoIdentidad')?.value;
+    } else if(TIPO == 'APODERADO1'){
+          documentoIdentidad = this.alumnoForm.get('apoderadoPrincipal_documentoIdentidad')?.value;
+    } else if(TIPO == 'APODERADO2'){ 
+            documentoIdentidad = this.alumnoForm.get('apoderadoSecundario_documentoIdentidad')?.value;
+      }
+    
+    if(documentoIdentidad){
+      Swal.fire({
+        title : 'Consultando Información...',
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        allowOutsideClick: false
+      });
+        this.externalApiService.obtenerApi(documentoIdentidad).subscribe({
+          next: (response:any) => {
+            Swal.close();
+            if(response.success && response.data){
+                console.log('Datos obtenidos de la API externa:', response.data);
+
+                if(TIPO === 'ALUMNO'){
+                  this.alumnoForm.controls['nombres'].setValue( response.data.first_name || '');
+                  this.alumnoForm.controls['apellidos'].setValue( response.data.first_last_name + ' ' + response.data.second_last_name || '');
+                              
+                  } else if(TIPO == 'APODERADO1'){
+                      this.alumnoForm.controls['apoderadoPrincipal_nombres'].setValue( response.data.first_name || '');
+                      this.alumnoForm.controls['apoderadoPrincipal_apellidos'].setValue( response.data.first_last_name + ' ' + response.data.second_last_name || '');
+                  }else if(TIPO == 'APODERADO2'){
+                      this.alumnoForm.controls['apoderadoSecundario_nombres'].setValue( response.data.first_name || '');
+                      this.alumnoForm.controls['apoderadoSecundario_apellidos'].setValue( response.data.first_last_name + ' ' + response.data.second_last_name || '');
+                    }
+                  }
+          }
+        });
     }
   }
 

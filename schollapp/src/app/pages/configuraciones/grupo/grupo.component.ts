@@ -76,10 +76,30 @@ export class GrupoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initializeForm(): FormGroup {
     return this.formBuilder.group({
+      edad1: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      edad2: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       descripcionGrupo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       activo: [true, [Validators.required]]
     });
   }
+
+  validarRangoEdades(): void {
+    const edad1 = this.grupoForm.get('edad1')?.value;
+    const edad2 = this.grupoForm.get('edad2')?.value;
+
+      if (edad1 != null && edad2 != null && edad1 > edad2) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Rango de edades inválido',
+          text: 'La edad inicial no puede ser mayor que la edad final.',
+          confirmButtonColor: '#3085d6'
+        });
+
+      } else {
+        this.grupoForm.controls['descripcionGrupo'].setValue(`DE ${edad1} A ${edad2} AÑOS`);
+      }
+  }
+
 
   /**
    * Configurar DataTables
@@ -237,6 +257,8 @@ export class GrupoComponent implements OnInit, OnDestroy, AfterViewInit {
           this.currentEditId = grupo.idGrupo || null;
           this.grupoForm.patchValue({
             descripcionGrupo: grupo.descripcionGrupo,
+            edad1: grupo.edad1,
+            edad2: grupo.edad2,
             activo: grupo.activo
           });
           this.modalRef = this.modalService.open(this.grupoModalTemplate, {

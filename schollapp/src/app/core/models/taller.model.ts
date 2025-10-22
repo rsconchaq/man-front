@@ -37,7 +37,7 @@ export interface Taller {
 export interface TallerResponse {
   success: boolean;
   message: string;
-  data: Taller | Taller[];
+  data: any | any[];
   total?: number;
 }
 

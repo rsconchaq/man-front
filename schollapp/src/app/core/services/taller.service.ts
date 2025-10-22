@@ -145,7 +145,17 @@ export class TallerService {
     );
   }
 
+  aperturarTaller(body :any){
+    const url = `${this.apiUrl}${this.endpoints.APERTURATALLER}`;
 
+    return this.http.post<any>(url, body, {
+      headers: GlobalComponent.headerToken,
+    }).pipe(
+      map(response => response),
+      catchError(this.handleError.bind(this))
+    );
+  }
+ 
   /**
    * Maneja errores HTTP
    */

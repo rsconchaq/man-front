@@ -124,6 +124,8 @@ export const GlobalComponent = {
             LISTAR: 'v1/etapaGrupo/listar/{idEtapa}',
             GUARDAR: 'v1/etapaGrupo/guardar', 
         },
-         
+        EXTERNAL_API: {
+            OBTENER: 'v1/externalApi/obtener/{numeroDocumento}',
+        }
     }
 }

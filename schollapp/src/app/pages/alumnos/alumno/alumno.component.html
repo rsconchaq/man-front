@@ -61,15 +61,24 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="documentoIdentidad">Documento Identidad</label>
-                <input id="documentoIdentidad" type="text" class="form-control" formControlName="documentoIdentidad">
+                <input id="documentoIdentidad" type="text" class="form-control" formControlName="documentoIdentidad" (focusout)="onDocumentoIdentidadFocusOut('ALUMNO')">
+                <span class="text-danger" *ngIf="alumnoForm.get('documentoIdentidad')?.invalid && alumnoForm.get('documentoIdentidad')?.touched">
+                  Documento de identidad es requerido.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="nombres">Nombres</label>
                 <input id="nombres" type="text" class="form-control" formControlName="nombres">
+                <span class="text-danger" *ngIf="alumnoForm.get('nombres')?.invalid && alumnoForm.get('nombres')?.touched">
+                  Nombres son requeridos.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="fechaNacimiento">Fecha Nacimiento</label>
                 <input id="fechaNacimiento" type="date" class="form-control" formControlName="fechaNacimiento" (change)="onCalcularEdad($event)">
+                <span class="text-danger" *ngIf="alumnoForm.get('fechaNacimiento')?.invalid && alumnoForm.get('fechaNacimiento')?.touched">
+                  Fecha de nacimiento es requerida.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="ciudad">Ciudad</label>
@@ -77,7 +86,13 @@
               </div>
               <div class="mb-3">
                 <label for="diagnostico">Diagnóstico</label>
-                <input id="diagnostico" type="text" class="form-control" formControlName="diagnostico">
+                 <select id="diagnostico" class="form-select" formControlName="diagnostico">
+                  <option value="">SELECCIONE</option>
+                  <option value="TEA">TEA</option>
+                  <option value="TDH">TDH</option>
+                  <option value="ANSIEDAD">ANSIEDAD</option>
+                  <option value="DEPRESION">DEPRESION</option>
+                </select>
               </div>
             </div>
             <div class="col-md-6">
@@ -88,6 +103,9 @@
               <div class="mb-3">
                 <label for="apellidos">Apellidos</label>
                 <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
+                <span class="text-danger" *ngIf="alumnoForm.get('apellidos')?.invalid && alumnoForm.get('apellidos')?.touched">
+                  Apellidos son requeridos.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="edad">Edad</label>
@@ -100,6 +118,9 @@
                   <option value="MASCULINO">Masculino</option>
                   <option value="FEMENINO">Femenino</option>
                 </select>
+                <span class="text-danger" *ngIf="alumnoForm.get('sexo')?.invalid && alumnoForm.get('sexo')?.touched">
+                  Sexo es requerido.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="direccion">Dirección</label>
@@ -123,15 +144,24 @@
                     <div class="col-md-6">
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_documentoIdentidad">Documento Identidad</label>
-                        <input id="apoderadoPrincipal_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoPrincipal_documentoIdentidad">
+                        <input id="apoderadoPrincipal_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoPrincipal_documentoIdentidad" (focusout)="onDocumentoIdentidadFocusOut('APODERADO1')">
+                        <span class="text-danger" *ngIf="alumnoForm.get('apoderadoPrincipal_documentoIdentidad')?.invalid && alumnoForm.get('apoderadoPrincipal_documentoIdentidad')?.touched">
+                          Documento de identidad es requerido.
+                        </span>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_nombres">Nombres</label>
                         <input id="apoderadoPrincipal_nombres" type="text" class="form-control" formControlName="apoderadoPrincipal_nombres">
+                        <span class="text-danger" *ngIf="alumnoForm.get('apoderadoPrincipal_nombres')?.invalid && alumnoForm.get('apoderadoPrincipal_nombres')?.touched">
+                          Nombres son requeridos.
+                        </span>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_telefono1">Teléfono 1</label>
                         <input id="apoderadoPrincipal_telefono1" type="text" class="form-control" formControlName="apoderadoPrincipal_telefono1">
+                      <span class="text-danger" *ngIf="alumnoForm.get('apoderadoPrincipal_telefono1')?.invalid && alumnoForm.get('apoderadoPrincipal_telefono1')?.touched">
+                          Teléfono 1 es requerido.
+                      </span>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_correo">Correo</label>
@@ -141,11 +171,22 @@
                     <div class="col-md-6">
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_tipoRelacion">Tipo Relación</label>
-                        <input id="apoderadoPrincipal_tipoRelacion" type="text" class="form-control" formControlName="apoderadoPrincipal_tipoRelacion">
+                         <select id="apoderadoPrincipal_tipoRelacion" class="form-select" formControlName="apoderadoPrincipal_tipoRelacion">
+                          <option value="">Seleccione</option>
+                          <option value="PADRE">Padre</option>
+                          <option value="MADRE">Madre</option>
+                          <option value="TUTOR">Tutor</option>
+                        </select>
+                        <span class="text-danger" *ngIf="alumnoForm.get('apoderadoPrincipal_tipoRelacion')?.invalid && alumnoForm.get('apoderadoPrincipal_tipoRelacion')?.touched">
+                          Tipo de relación es requerido.
+                        </span>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_apellidos">Apellidos</label>
                         <input id="apoderadoPrincipal_apellidos" type="text" class="form-control" formControlName="apoderadoPrincipal_apellidos">
+                        <span class="text-danger" *ngIf="alumnoForm.get('apoderadoPrincipal_apellidos')?.invalid && alumnoForm.get('apoderadoPrincipal_apellidos')?.touched">
+                          Apellidos son requeridos.
+                        </span>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoPrincipal_telefono2">Teléfono 2</label>
@@ -162,7 +203,7 @@
                     <div class="col-md-6">
                       <div class="mb-3">
                         <label for="apoderadoSecundario_documentoIdentidad">Documento Identidad</label>
-                        <input id="apoderadoSecundario_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoSecundario_documentoIdentidad">
+                        <input id="apoderadoSecundario_documentoIdentidad" type="text" class="form-control" formControlName="apoderadoSecundario_documentoIdentidad" (focusout)="onDocumentoIdentidadFocusOut('APODERADO2')">
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoSecundario_nombres">Nombres</label>
@@ -180,7 +221,12 @@
                     <div class="col-md-6">
                       <div class="mb-3">
                         <label for="apoderadoSecundario_tipoRelacion">Tipo Relación</label>
-                        <input id="apoderadoSecundario_tipoRelacion" type="text" class="form-control" formControlName="apoderadoSecundario_tipoRelacion">
+                         <select id="apoderadoSecundario_tipoRelacion" class="form-select" formControlName="apoderadoSecundario_tipoRelacion">
+                          <option value="">Seleccione</option>
+                          <option value="PADRE">Padre</option>
+                          <option value="MADRE">Madre</option>
+                          <option value="TUTOR">Tutor</option>
+                        </select>
                       </div>
                       <div class="mb-3">
                         <label for="apoderadoSecundario_apellidos">Apellidos</label>

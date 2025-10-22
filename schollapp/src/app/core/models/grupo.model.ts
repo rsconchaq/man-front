@@ -3,6 +3,8 @@ export interface GrupoDto {
   idGrupo?: string;
   descripcionGrupo: string;
   descripcion?: string;
+  edad1:number;
+  edad2:number;
   activo?: number;
   asignado?: boolean;
   usuarioRegistro?: string;
@@ -18,6 +20,8 @@ export interface Grupo {
   idGrupo?: string;
   descripcionGrupo: string;
   descripcion?: string;
+  edad1:number;
+  edad2:number;
   activo: string;
   asignado?: boolean;
   usuarioRegistro?: string;
@@ -45,6 +49,8 @@ export class GrupoMapper {
       idGrupo: dto.idGrupo||'0',
       descripcionGrupo: dto.descripcionGrupo,
       descripcion: dto.descripcion,
+      edad1: dto.edad1,
+      edad2: dto.edad2,
       activo: dto.activo ? "true" : "false",
       asignado: dto.asignado ?? false,
       usuarioRegistro: dto.usuarioRegistro,
@@ -62,6 +68,8 @@ export class GrupoMapper {
       idGrupo: grupo.idGrupo||'0',
       descripcionGrupo: grupo.descripcionGrupo,
       descripcion: grupo.descripcion,
+      edad1: grupo.edad1,
+      edad2: grupo.edad2,
       activo: grupo.activo ? 1 : 0,
       asignado: grupo.asignado,
       usuarioRegistro: grupo.usuarioRegistro,

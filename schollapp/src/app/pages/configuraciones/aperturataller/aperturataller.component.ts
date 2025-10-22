@@ -1,8 +1,10 @@
+
 import { GrupoTallerService } from './../../../core/services/grupotaller.service';
 import { EtapaGrupo } from './../../../core/models/etapagrupo.model';
 import { EtapagrupoService } from './../../../core/services/etapagrupo.service';
 import { LocalService } from 'src/app/core/services/local.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject, forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -22,6 +24,7 @@ import Swal from 'sweetalert2';
   standalone: false
 })
 export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit  {
+  aperturaTallerForm!: FormGroup;
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
   dtOptions: any = {};
@@ -50,19 +53,45 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
     private grupoService: GrupoService,
     private etapaGrupoService: EtapagrupoService,
     private grupoTallerService : GrupoTallerService,
+    private fb: FormBuilder
   ) {}
 
   
 
    ngOnInit() {
-    this.dtOptions = {
+    this.aperturaTallerForm = this.fb.group({
+      localId: ['', Validators.required],
+      etapaId: ['', Validators.required],
+      grupoId: ['', Validators.required],
+      aulaId: ['', Validators.required],
+      tallerId: ['', Validators.required],
+      vacantes: ['', [Validators.required, Validators.min(1)]],
+      aperturaClase0: [false],
+      fechaInicio: ['', Validators.required],
+      diaSemana: ['', Validators.required],
+      horaInicio: ['', Validators.required],
+      horaFin: ['', Validators.required],
+      descripcionTaller: ['', Validators.required]
+    });
+  this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       autoWidth: true
     };
     this.configurarDataTables();
     this.cargarDatosIniciales();
-    
+
+    // Cargar talleres aperturados para la grilla Angular
+    this.tallerService.listarAperturaTaller().subscribe({
+      next: (response) => {
+        const mapped = TallerMapper.fromResponse(response);
+        this.lista = Array.isArray(mapped.data) ? mapped.data : [mapped.data];
+      },
+      error: (error) => {
+        console.error('Error al cargar talleres aperturados:', error);
+        this.lista = [];
+      }
+    });
   }
 
    ngAfterViewInit(): void {
@@ -163,128 +192,136 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
     const diasSemana = [ 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado','Domingo'];
     const fecha = new Date(selectedDiaSemana);
     const diaSemana = diasSemana[fecha.getDay()]; // domingo=0, lunes=1, etc.
-    (document.getElementById('diaSemanaSelect') as HTMLSelectElement).value = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+    this.aperturaTallerForm.controls['diaSemana'].setValue(diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1));
   }
 
 
   private configurarDataTables(): void {
-      this.dtOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10,
-        lengthMenu: [5, 10, 25, 50],
-        processing: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        language: {
-          processing: 'Procesando...',
-          search: 'Buscar:',
-          lengthMenu: 'Mostrar _MENU_ registros',
-          info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-          infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-          infoFiltered: '(filtrado de un total de _MAX_ registros)',
-          infoPostFix: '',
-          loadingRecords: 'Cargando...',
-          zeroRecords: 'No se encontraron resultados',
-          emptyTable: 'Ningún dato disponible en esta tabla',
-          paginate: {
-            first: 'Primero',
-            previous: 'Anterior',
-            next: 'Siguiente',
-            last: 'Último'
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      lengthMenu: [5, 10, 25, 50],
+      processing: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      language: {
+        processing: 'Procesando...',
+        search: 'Buscar:',
+        lengthMenu: 'Mostrar _MENU_ registros',
+        info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+        infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+        infoFiltered: '(filtrado de un total de _MAX_ registros)',
+        infoPostFix: '',
+        loadingRecords: 'Cargando...',
+        zeroRecords: 'No se encontraron resultados',
+        emptyTable: 'Ningún dato disponible en esta tabla',
+        paginate: {
+          first: 'Primero',
+          previous: 'Anterior',
+          next: 'Siguiente',
+          last: 'Último'
+        }
+      },
+      ajax: (dataTablesParameters: any, callback: any) => {
+        this.tallerService.listarAperturaTaller().subscribe({
+          next: (response) => {
+             const dataArray = response.data;
+            callback({
+              recordsTotal: dataArray.length,
+              recordsFiltered: dataArray.length,
+              data: dataArray
+            });
+          },
+          error: (error) => {
+            console.error('Error loading data:', error);
+            callback({
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: []
+            });
+          }
+        });
+      },
+      columns: [
+        {
+          title: 'IdApertura',
+          data: 'idAperturaTaller',
+          width: '80px'
+        },
+        {
+          title: 'Nombre Taller',
+          data: 'descripcionTaller'
+        },
+        {
+          title: 'Local',
+          data: 'descripcionLocal'
+        },
+        {
+          title: 'Etapa',
+          data: 'descripcionEtapa'
+        },
+        {
+          title: 'Grupo',
+          data: 'descripcionGrupo'
+        },
+        {
+          title: 'Vacantes Total',
+          data: 'total_vacantes'
+        },
+        {
+          title: 'Vacantes Disponibles',
+          data: 'vacantes_disponible'
+        },
+        {
+          title: 'Dia Semana',
+          data: 'diaSemana'
+        },
+        {
+          title: 'Fecha Hora Inicio',
+          data: 'fechaInicio'
+        },
+        {
+          title: 'Fecha Hora Fin',
+          data: 'fechaFin'
+        },
+        {
+          title: 'Estado',
+          data: 'estado',
+          render: (estado: number) => {
+            return estado === 1 ? '<span class="badge bg-success">ACTIVO</span>' : '<span class="badge bg-danger">INACTIVO</span>';
           }
         },
-        ajax: (dataTablesParameters: any, callback: any) => {
-          this.tallerService.listarAperturaTaller().subscribe({
-            next: (response) => {
-              // Mapea la respuesta usando TallerMapper
-              const mapped = TallerMapper.fromResponse(response);
-              const dataArray = Array.isArray(mapped.data) ? mapped.data : [mapped.data];
-              // Log para depuración
-              console.log('Datos recibidos para DataTable:', dataArray);
-              callback({
-                recordsTotal: dataArray.length,
-                recordsFiltered: dataArray.length,
-                data: dataArray
-              });
-            },
-            error: (error) => {
-              console.error('Error loading data:', error);
-              callback({
-                recordsTotal: 0,
-                recordsFiltered: 0,
-                data: []
-              });
-            }
-          });
-        },
-        columns: [
-          {
-            title: 'IdApertura',
-            data: 'id',
-            width: '80px'
-          },
-          {
-            title: 'Nombre Taller',
-            data: 'descripcion'
-          },
-          {
-            title: 'Local',
-            data: 'localDescripcion'
-          },
-          {
-            title: 'Etapa',
-            data: 'etapaDescripcion'
-          },
-          {
-            title: 'Grupo',
-            data: 'grupoDescripcion'
-          },
-          {
-            title: 'Vacantes Total',
-            data: 'vacantesTotal'
-          },
-          {
-            title: 'Vacantes Disponibles',
-            data: 'vacantesDisponibles'
-          },
-          {
-            title: 'Dia Semana',
-            data: 'diaSemana'
-          },
-          {
-            title: 'Fecha Hora Inicio',
-            data: 'fechaHoraInicio'
-          },
-          {
-            title: 'Fecha Hora Fin',
-            data: 'fechaHoraFin'
-          },
-          {
-            title: 'Acciones',
-            data: null,
-            orderable: false,
-            searchable: false,
-            render: (data: any, type: any, row: any) => {
-              return `
-                <div class="d-flex gap-2">
-                  <button class="btn btn-sm btn-primary btn-edit" 
-                          data-id="${row.id}" 
-                          >
-                    <i class="ri-edit-line"></i>
-                  </button>
-                  <button class="btn btn-sm btn-danger btn-delete" 
-                          data-id="${row.id}"
-                           >
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-                   
-                </div>
-              `;
-            }
+        {
+          title: 'Acciones',
+          data: null,
+          orderable: false,
+          searchable: false,
+          render: (data: any, type: any, row: any) => {
+            return `
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-primary btn-edit"
+                        data-id="${row.id}"
+                        data-descripcion="${row.descripcion}"
+                        data-local="${row.localDescripcion || ''}"
+                        data-etapa="${row.etapaDescripcion || ''}"
+                        data-grupo="${row.grupoDescripcion || ''}"
+                        data-activo="${row.activo}"
+                        title="Editar">
+                  <i class="ri-edit-line"></i>
+                </button>
+                <button class="btn btn-sm btn-danger btn-delete"
+                        data-id="${row.id}"
+                        data-descripcion="${row.descripcion}"
+                        title="Eliminar">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+            `;
           }
-        ]
-      };
+        }
+      ]
+    };
   
       // Event delegation para botones dinámicos
       document.addEventListener('click', (event: Event) => {
@@ -327,6 +364,84 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
         console.error('Error al cargar locales:', error);
       }
     });
+  }
+
+
+  aperturarTaller() {
+    if (!this.aperturaTallerForm || this.aperturaTallerForm.invalid) {
+      this.aperturaTallerForm?.markAllAsTouched();
+      return;
+    }
+    const form = this.aperturaTallerForm.value;
+    // Suponiendo 8 semanas, puedes ajustar según tu lógica
+    const cantidadSemanas = 8;
+    const fechas = this.generarFechas(form.fechaInicio, form.horaInicio, form.horaFin, cantidadSemanas);
+    const body = {
+      idAperturaTaller: 0,
+      idEtapaDetalleTaller: 0,
+      idEtapa: form.etapaId,
+      idGrupo: form.grupoId,
+      idTaller: form.tallerId,
+      idAula: form.aulaId,
+      descripcionTaller: form.descripcionTaller,
+      diaSemana: form.diaSemana,
+      horaInicio: form.horaInicio,
+      horaFin: form.horaFin,
+      fechaInicio: form.fechaInicio,
+      fechaFin: fechas.length > 0 ? fechas[fechas.length-1].fechaFin : '',
+      total_vacantes: form.vacantes,
+      vacantes_disponible: form.vacantes,
+      apertura: form.aperturaClase0 ? 1 : 0,
+      fechas: fechas
+    };
+    this.tallerService.aperturarTaller(body).subscribe({
+      next: (response) => {
+        if (response.success) {
+          Swal.fire('Éxito', 'Taller aperturado correctamente', 'success');
+          this.aperturaTallerForm.reset();
+          this.recargarDataTable();
+        }
+      },
+      error: (error) => {
+        Swal.fire('Error', 'No se pudo aperturar el taller', 'error');
+      }
+    });
+  }
+
+  // Genera un array de fechas semanales a partir de la fecha de inicio y cantidad de semanas
+  generarFechas(fechaInicio: string, horaInicio: string, horaFin: string, cantidadSemanas: number): {fechaInicio: string, fechaFin: string}[] {
+    const fechas = [];
+    let fecha = new Date(fechaInicio + 'T' + horaInicio);
+    for (let i = 0; i < cantidadSemanas; i++) {
+      const inicio = new Date(fecha);
+      const fin = new Date(fecha);
+      const [hFin, mFin] = horaFin.split(':');
+      fin.setHours(Number(hFin), Number(mFin));
+      fechas.push({
+        fechaInicio: `${inicio.getFullYear()}-${(inicio.getMonth()+1).toString().padStart(2,'0')}-${inicio.getDate().toString().padStart(2,'0')} ${horaInicio}`,
+        fechaFin: `${fin.getFullYear()}-${(fin.getMonth()+1).toString().padStart(2,'0')}-${fin.getDate().toString().padStart(2,'0')} ${horaFin}`
+      });
+      fecha.setDate(fecha.getDate() + 7);
+    }
+    return fechas;
+  }
+  setAperturaTallerFormFromData(data: any) {
+    this.aperturaTallerForm.patchValue({
+      localId: data.idLocal || '',
+      etapaId: data.idEtapa || '',
+      grupoId: data.idGrupo || '',
+      aulaId: data.idAula || '',
+      tallerId: data.idTaller || '',
+      vacantes: data.total_vacantes || '',
+      aperturaClase0: data.apertura || false,
+      fechaInicio: data.fechaInicio ? data.fechaInicio.split(' ')[0] : '',
+      diaSemana: data.diaSemana || '',
+      horaInicio: data.horaInicio || '',
+      horaFin: data.horaFin || '',
+      descripcionTaller: data.descripcionTaller || ''
+    });
+    // Si necesitas setear fechas adicionales, puedes guardarlas en otra variable
+    // this.fechas = data.fechas || [];
   }
 
   /**
