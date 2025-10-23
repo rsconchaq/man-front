@@ -1,0 +1,154 @@
+.dual-listbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.listbox {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.listbox-title {
+  margin: 0 0 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #007bff;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.search-box {
+  position: relative;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  width: 100%;
+  padding-right: 30px;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  color: #999;
+  pointer-events: none;
+}
+
+.listbox-items {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fafafa;
+  padding: 5px;
+}
+
+.listbox-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  margin-bottom: 2px;
+  user-select: none;
+  outline: none;
+}
+
+.listbox-item:hover {
+  background-color: #e3f2fd;
+}
+
+.listbox-item:focus {
+  background-color: #e3f2fd;
+  box-shadow: 0 0 0 2px #007bff inset;
+}
+
+.listbox-item.selected {
+  background-color: #007bff;
+  color: white;
+  font-weight: 500;
+}
+
+.listbox-item.selected:focus {
+  box-shadow: 0 0 0 2px #0056b3 inset;
+}
+
+.listbox-empty {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons button {
+  width: 45px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Scroll personalizado */
+.listbox-items::-webkit-scrollbar {
+  width: 8px;
+}
+
+.listbox-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.listbox-items::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.listbox-items::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dual-listbox {
+    flex-direction: column;
+  }
+
+  .listbox {
+    width: 100%;
+  }
+
+  .buttons {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .buttons button {
+    transform: rotate(90deg);
+  }
+}

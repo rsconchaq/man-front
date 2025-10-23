@@ -1,13 +1,11 @@
-import { data } from './../../charts/Apexcharts/area/area.component';
 import { EtapaService } from './../../../core/services/etapa.service';
 import { Local } from './../../../core/models/local.model';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 
 import { EtapaGrupo } from '../../../core/models/etapagrupo.model';
 import { EtapagrupoService } from '../../../core/services/etapagrupo.service';
 import { LocalService } from 'src/app/core/services/local.service';
-import { DualListComponent } from 'angular-dual-listbox';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-etapagrupo',
@@ -15,153 +13,126 @@ import { DualListComponent } from 'angular-dual-listbox';
   styleUrls: ['./etapagrupo.component.scss'],
   standalone: false
 })
-export class EtapagrupoComponent implements OnInit, AfterViewInit {
-  lista: EtapaGrupo[] = [];
-  seleccionado: EtapaGrupo | null = null;
-  modoEdicion = false;
+export class EtapagrupoComponent implements OnInit {
   locales: Local[] = [];
   etapas: any[] = [];
+  listaGrupos: any[] = [];
   etapasFiltradas: any[] = [];
+  selectedLocalId: string = '';
+  selectedEtapaId: string = '';
 
-  tab = 1;
-  keepSorted = true;
-  key: string='';
-  display: string='';
-  filter = false;
-  source: Array<any> = [];
-  confirmed: Array<any> = [];
-  userAdd = '';
-  disabled = false;
-
-  sourceLeft = true;
-  format: any = DualListComponent.DEFAULT_FORMAT;
-
-   
-
-  gruposPorAsignar: Array<any> = [];
-  gruposAsignados : Array<any> = [];
+  // Datos para dual-listbox
+  availableGroups: Array<any> = [];
+  selectedGroups: Array<any> = [];
 
  
 
-  constructor(private etapagrupoService: EtapagrupoService, private localService:  LocalService,
-    private EtapaService : EtapaService
+  constructor(
+    private etapagrupoService: EtapagrupoService,
+    private localService: LocalService,
+    private EtapaService: EtapaService
   ) {}
 
-
-    ngAfterViewInit(): void {
-    console.log(this.source);
-    console.log(this.confirmed);
-    }
-
   ngOnInit(): void {
+    this.cargarDatosIniciales();
+  }
+
+  private cargarDatosIniciales(): void {
     Promise.all([
       this.localService.listarLocales().toPromise(),
       this.EtapaService.listarEtapas().toPromise()
     ]).then(([localesResp, etapasResp]) => {
       this.locales = localesResp && localesResp.data ? (Array.isArray(localesResp.data) ? localesResp.data : [localesResp.data]) : [];
       this.etapas = etapasResp && etapasResp.data ? (Array.isArray(etapasResp.data) ? etapasResp.data : [etapasResp.data]) : [];
-       
     });
+  }
+
+  onLocalChange(event: any): void {
+    this.selectedLocalId = event.target.value;
+    this.etapasFiltradas = this.etapas.filter(etapa => etapa.local.id == this.selectedLocalId);
+    this.selectedEtapaId = '';
+    this.availableGroups = [];
+    this.selectedGroups = [];
+    this.listaGrupos = [];
+  }
+
+  onEtapaChange(event: any): void {
+    this.selectedEtapaId = event.target.value;
     
-  }
+    if (!this.selectedEtapaId) {
+      this.availableGroups = [];
+      this.selectedGroups = [];
+      return;
+    }
 
+    Swal.fire({
+      title: 'Cargando grupos...',
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
-    private useStations() {
-
-
-
-    this.key = 'idGrupo';
-    this.display = 'descripcionGrupo'; // [ 'station', 'state' ];
-    this.keepSorted = true;
-    this.source = this.gruposPorAsignar;
-    this.confirmed = this.gruposAsignados;
-    console.log(this.source);
-    console.log(this.confirmed);
-  }
-  doReset() {
-    this.gruposPorAsignar =  this.lista.filter( (element: any) =>  element.asignado == 0);
-    this.gruposAsignados = this.lista.filter( (element: any) =>  element.asignado == 1);
-
-    console.log(this.source);
-    console.log(this.confirmed);
-    this.useStations();
-  }
-
-
-
-  filterBtn() {
-    return (this.filter ? 'Hide Filter' : 'Show Filter');
-  }
-
-  doDisable() {
-    this.disabled = !this.disabled;
-  }
-
-  disableBtn() {
-    return (this.disabled ? 'Enable' : 'Disabled');
-  }
-
-  swapDirection() {
-    this.sourceLeft = !this.sourceLeft;
-    this.format.direction = this.sourceLeft ? DualListComponent.LTR : DualListComponent.RTL;
-  }
-
-
-
-  onLocalChange(even:any) {
-
-
-    this.etapasFiltradas = this.etapas.filter(etapa => etapa.local.id == even.target.value );
-    console.log("this.etapasFiltradas");
-    console.log(this.etapasFiltradas);
-
-  }
-
-  onEtapaChange(event :  any) {
-    this.etapagrupoService.listar(event.target.value).subscribe({
+    this.etapagrupoService.listar(Number(this.selectedEtapaId)).subscribe({
       next: (resp) => {
-        this.lista = Array.isArray(resp.data) ? resp.data : [resp.data];
-        this.gruposAsignados = [];
-        this.gruposPorAsignar = [];
-        this.doReset();
+        Swal.close();
+          this.listaGrupos = Array.isArray(resp.data) ? resp.data : [resp.data];
+        this.availableGroups = this.listaGrupos.filter((g: any) => g.asignado === 0);
+        this.selectedGroups = this.listaGrupos.filter((g: any) => g.asignado === 1);
+      },
+      error: (error) => {
+        Swal.close();
+        Swal.fire('Error', 'Error al cargar los grupos', 'error');
+        console.error('Error al cargar grupos:', error);
       }
     });
   }
 
-  guardar() {
-    // Validar etapa seleccionada
-    const etapaId = this.etapasFiltradas.length > 0 ? this.etapasFiltradas[0].id : null;
-    if (!etapaId) {
-      alert('Debe seleccionar una etapa válida.');
+  onSelectionChange(selectedItems: any[]): void {
+    this.selectedGroups = selectedItems;
+  }
+
+  guardar(): void {
+    if (!this.selectedEtapaId) {
+      Swal.fire('Advertencia', 'Debe seleccionar una etapa válida.', 'warning');
       return;
     }
-    // Validar grupos asignados
-    if (!this.confirmed || this.confirmed.length === 0) {
-      alert('Debe asignar al menos un grupo.');
+
+    if (!this.selectedGroups || this.selectedGroups.length === 0) {
+      Swal.fire('Advertencia', 'Debe asignar al menos un grupo.', 'warning');
       return;
     }
-    // Construir payload para guardar asignaciones
-    const payload = {
-      etapaId: etapaId,
-      grupos: this.confirmed.map(g => g.idGrupo)
-    };
-    // Usar el método registrarAsignacion para el payload personalizado
+
+
+    
+
+    let payload: any[] = [];
+
+    this.selectedGroups.forEach(g => {
+      payload.push({
+        idEtapa: Number(this.selectedEtapaId),
+        idGrupo: g.idGrupo
+      });
+    });
+
+     
+    Swal.fire({
+      title: 'Guardando...',
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.etapagrupoService.registrar(payload).subscribe({
       next: (resp: any) => {
-        alert('Asignación guardada correctamente.');
-        // Opcional: recargar datos o limpiar selección
+        Swal.close();
+        Swal.fire('Éxito', 'Asignación guardada correctamente.', 'success');
+        // Recargar datos
+        this.onEtapaChange({ target: { value: this.selectedEtapaId } });
       },
       error: () => {
-        alert('Error al guardar la asignación.');
+        Swal.close();
+        Swal.fire('Error', 'Error al guardar la asignación.', 'error');
       }
     });
-  }
-
-  onDualListChange(destination: any[]) {
-    // Actualiza source eliminando los elementos que están en destination
-    this.source = this.source.filter(item => !destination.some(d => d.idGrupo === item.idGrupo));
-    // Opcional: si quieres que los removidos vuelvan a source, puedes manejarlo aquí
-    console.log('Nueva selección de grupos asignados:', destination);
-    console.log('Source actualizado:', this.source);
   }
 }

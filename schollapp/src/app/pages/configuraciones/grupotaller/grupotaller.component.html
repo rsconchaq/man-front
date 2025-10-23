@@ -7,7 +7,7 @@
     <form class="row mb-3">
       <div class="col-md-4">
         <label for="localSelect">Locales</label>
-        <select class="form-control form-control-sm"  bindLabel="nombre" bindValue="id" [(ngModel)]="localSeleccionado" name="localSelect" placeholder="Seleccione un local" (change)="onLocalChange()">
+        <select class="form-select form-control-sm"  bindLabel="nombre" bindValue="id" [(ngModel)]="localSeleccionado" name="localSelect" placeholder="Seleccione un local" (change)="onLocalChange()">
             <option value="">Seleccione un local</option>
             <option *ngFor="let local of locales" [value]="local.id">
                 {{ local.descripcion }}
@@ -16,19 +16,19 @@
       </div>
       <div class="col-md-4">
         <label for="etapaSelect">Etapa</label>
-        <select class="form-control form-control-sm" bindLabel="nombre" bindValue="id" [(ngModel)]="etapaSeleccionada" name="etapaSelect" placeholder="Seleccione una etapa" (change)="onEtapaChange()">
+        <select class="form-select form-control-sm" bindLabel="nombre" bindValue="id" [(ngModel)]="etapaSeleccionada" name="etapaSelect" placeholder="Seleccione una etapa" (change)="onEtapaChange( )">
             <option value="">Seleccione una etapa</option>
-            <option *ngFor="let etapa of etapas" [value]="etapa.idEtapa">
+            <option *ngFor="let etapa of etapas" [value]="etapa.id">
                 {{ etapa.descripcionEtapa }}
             </option>
         </select>
       </div>
       <div class="col-md-4">
         <label for="grupoEdadSelect">Grupo Edad</label>
-        <select class="form-control form-control-sm" bindLabel="nombre" bindValue="id" [(ngModel)]="grupoEdadSeleccionado" name="grupoEdadSelect" placeholder="Seleccione grupo edad">
+        <select class="form-select form-control-sm" bindLabel="nombre" bindValue="id" [(ngModel)]="grupoEdadSeleccionado" name="grupoEdadSelect" placeholder="Seleccione grupo edad">
             <option value="">Seleccione grupo edad</option>
-            <option *ngFor="let grupo of gruposEdad" [value]="grupo.id">
-                {{ grupo.descripcion }}
+            <option *ngFor="let grupo of gruposEdad" [value]="grupo.idGrupo">
+                {{ grupo.descripcionGrupo }}
             </option>
         </select>
       </div>
@@ -38,14 +38,15 @@
     </form>
     <div class="row">
       <div class="col-md-12">
-        <dual-list
-          [source]="talleresPorAsignar"
-          [(destination)]="talleresAsignados"
-          [display]="'nombre'"
-          [filter]="true"
+        <app-dual-listbox
+          [availableItems]="talleresPorAsignar"
+          [selectedItems]="talleresAsignados"
+          [key]="'idTaller'"
+          [display]="'descripcion'"
+          [showSearchBox]="true"
           [height]="'200px'"
-          (destinationChange)="onAsignadosChange($event)">
-        </dual-list>
+          (selectionChange)="onSelectionChange($event)">
+        </app-dual-listbox>
       </div>
     </div>
   </div>

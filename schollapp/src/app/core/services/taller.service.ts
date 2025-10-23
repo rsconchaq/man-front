@@ -109,7 +109,7 @@ export class TallerService {
   }
 
 
-   obtenerAperturaTallerId(id: number): Observable<any> {
+   obtenerAperturaTallerId(id: any): Observable<any> {
     const url = `${this.apiUrl}${this.endpoints.OBTENERAPERTURATALLERID.replace('{idAperturaTaller}', id.toString())}`;
 
     return this.http.get<any>(url, {

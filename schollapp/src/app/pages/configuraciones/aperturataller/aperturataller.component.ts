@@ -3,7 +3,7 @@ import { GrupoTallerService } from './../../../core/services/grupotaller.service
 import { EtapaGrupo } from './../../../core/models/etapagrupo.model';
 import { EtapagrupoService } from './../../../core/services/etapagrupo.service';
 import { LocalService } from 'src/app/core/services/local.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject, forkJoin } from 'rxjs';
@@ -16,6 +16,7 @@ import { TallerService } from 'src/app/core/services/taller.service';
 import { GrupoService } from 'src/app/core/services/grupo.service';
 import { TallerMapper } from 'src/app/core/models/taller.model';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-aperturataller',
@@ -29,7 +30,10 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
   dtElement!: DataTableDirective;
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  private modalRef: any;
 
+  @ViewChild('DetalleFechasModal', { static: true })
+  detalleFechasModalTemplate!: TemplateRef<any>;
   
   lista: any[] = [];
   seleccionado: any = null;
@@ -43,6 +47,7 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
   listaAulaFiltrada : any[]=[];
   listaTaller : any[]=[];
   listaCronograma : any[]=[];
+  listaDetalleFechas : any[]=[];
 
 
   constructor(
@@ -53,7 +58,8 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
     private grupoService: GrupoService,
     private etapaGrupoService: EtapagrupoService,
     private grupoTallerService : GrupoTallerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private readonly modalService: NgbModal
   ) {}
 
   
@@ -301,20 +307,14 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
             return `
               <div class="d-flex gap-2">
                 <button class="btn btn-sm btn-primary btn-edit"
-                        data-id="${row.id}"
-                        data-descripcion="${row.descripcion}"
-                        data-local="${row.localDescripcion || ''}"
-                        data-etapa="${row.etapaDescripcion || ''}"
-                        data-grupo="${row.grupoDescripcion || ''}"
-                        data-activo="${row.activo}"
-                        title="Editar">
+                        data-id="${row.idAperturaTaller}"
+                         title="Editar">
                   <i class="ri-edit-line"></i>
                 </button>
                 <button class="btn btn-sm btn-danger btn-delete"
-                        data-id="${row.id}"
-                        data-descripcion="${row.descripcion}"
-                        title="Eliminar">
-                  <i class="ri-delete-bin-line"></i>
+                        data-id="${row.idAperturaTaller}"
+                        title="Detalle Fechas">
+                  <i class=" ri-eye-line"></i>
                 </button>
               </div>
             `;
@@ -330,10 +330,7 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
         if (target.closest('.btn-edit')) {
           const button = target.closest('.btn-edit') as HTMLElement;
           const local: any = {
-            id: parseInt(button.dataset['id'] || '0'),
-            descripcion: button.dataset['descripcion'] || '',
-            direccion: button.dataset['direccion'] || '',
-            activo: button.dataset['activo'] === 'true'
+              id: parseInt(button.dataset['id'] || '0') 
           };
           this.editar(local);
         }
@@ -341,10 +338,7 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
         if (target.closest('.btn-delete')) {
           const button = target.closest('.btn-delete') as HTMLElement;
           const local: any = {
-            id: parseInt(button.dataset['id'] || '0'),
-            descripcion: button.dataset['descripcion'] || '',
-            direccion: '',
-            activo: true
+            id: parseInt(button.dataset['id'] || '0')  
           };
           this.view(local);
         }
@@ -425,24 +419,7 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
     }
     return fechas;
   }
-  setAperturaTallerFormFromData(data: any) {
-    this.aperturaTallerForm.patchValue({
-      localId: data.idLocal || '',
-      etapaId: data.idEtapa || '',
-      grupoId: data.idGrupo || '',
-      aulaId: data.idAula || '',
-      tallerId: data.idTaller || '',
-      vacantes: data.total_vacantes || '',
-      aperturaClase0: data.apertura || false,
-      fechaInicio: data.fechaInicio ? data.fechaInicio.split(' ')[0] : '',
-      diaSemana: data.diaSemana || '',
-      horaInicio: data.horaInicio || '',
-      horaFin: data.horaFin || '',
-      descripcionTaller: data.descripcionTaller || ''
-    });
-    // Si necesitas setear fechas adicionales, puedes guardarlas en otra variable
-    // this.fechas = data.fechas || [];
-  }
+  
 
   /**
    * Recargar DataTable
@@ -456,9 +433,37 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   editar(item: any) {
-    this.seleccionado = { ...item };
-    this.modoEdicion = true;
-    // Aquí puedes poblar los campos del formulario con los datos seleccionados
+ 
+    this.tallerService.obtenerAperturaTallerId(item.id).subscribe({
+      next: (resp) => {
+        const data = resp.data;
+        
+
+        const etapa = this.listaEtapa.filter(et => et.id == data.idEtapa)[0];
+        this.listaEtapaFiltrar = this.listaEtapa.filter(et => et.local.id == etapa.localId);
+        this.listaAulaFiltrada = this.listaAula.filter(aula => aula.idLocal == etapa.localId)
+
+
+
+    this.aperturaTallerForm.patchValue({
+      localId: etapa.localId || '',
+      etapaId: data.idEtapa || '',
+      grupoId: data.idGrupo || '',
+      aulaId: data.idAula || '',
+      tallerId: data.idTaller || '',
+      vacantes: data.total_vacantes || '',
+      aperturaClase0: data.apertura || false,
+      fechaInicio: data.fechaInicio ? data.fechaInicio.split(' ')[0] : '',
+      diaSemana: data.diaSemana || '',
+      horaInicio: data.horaInicio || '',
+      horaFin: data.horaFin || '',
+      descripcionTaller: data.descripcionTaller || ''
+    });
+      },
+      error: (error) => {
+        console.error('Error al obtener detalle de apertura de taller:', error);
+      }
+    });
   }
 
   cancelarEdicion() {
@@ -467,6 +472,33 @@ export class AperturatallerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   view(item:any){
+    Swal.fire({
+      title: 'Detalle de Fechas',
+      text: 'Cargando...',
+      showConfirmButton: false
+    });
+    this.tallerService.obtenerAperturaTallerId(item.id).subscribe({
+      next: (resp) => {
+        Swal.close();
+        const data = resp.data;
+        this.listaDetalleFechas = data.fechas;
+        this.modalRef = this.modalService.open(this.detalleFechasModalTemplate, {
+          size: 'lg',
+          centered: true,
+          backdrop: 'static'
+        });
+      },
+      error: (error) => {
+        Swal.close();
+        console.error('Error al obtener detalle de apertura de taller:', error);
+      }
+    });
+  }
 
+    cerrarModal(): void {
+    if (this.modalRef) {
+      this.modalRef.close();
+      this.listaDetalleFechas = [];
+    }
   }
 }

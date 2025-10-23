@@ -1,0 +1,109 @@
+<div class="dual-listbox">
+  <!-- Available Items List -->
+  <div class="listbox" [style.height]="height">
+    <h6 class="listbox-title">Disponibles</h6>
+    <div *ngIf="showSearchBox" class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="availableSearchTerm"
+        (input)="filterItems('available')"
+        placeholder="Buscar..."
+        class="form-control form-control-sm"
+      />
+      <span class="search-icon">
+        <i class="ri-search-line"></i>
+      </span>
+    </div>
+    <div class="listbox-items" role="listbox" aria-label="Elementos disponibles">
+      <div
+        *ngFor="let item of availableFilteredItems; trackBy: trackByFn"
+        class="listbox-item"
+        [class.selected]="isSelectedAvailable(item)"
+        (click)="selectAvailableItem(item)"
+        (keydown.enter)="selectAvailableItem(item); $event.preventDefault()"
+        (keydown.space)="selectAvailableItem(item); $event.preventDefault()"
+        tabindex="0"
+        [attr.aria-label]="getDisplayValue(item)"
+      >
+        {{ getDisplayValue(item) }}
+      </div>
+      <div *ngIf="availableFilteredItems.length === 0" class="listbox-empty">
+        No hay elementos disponibles
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons to Move Items -->
+  <div class="buttons">
+    <button
+      type="button"
+      class="btn btn-sm btn-primary mb-2"
+      (click)="moveAllToSelected()"
+      [disabled]="availableItems.length === 0"
+      title="Mover todos a la derecha"
+    >
+      <i class="ri-arrow-right-double-line"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-primary mb-2"
+      (click)="moveToSelected()"
+      [disabled]="!selectedAvailableItem"
+      title="Mover seleccionado a la derecha"
+    >
+      <i class="ri-arrow-right-line"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-secondary mb-2"
+      (click)="moveToAvailable()"
+      [disabled]="!selectedSelectedItem"
+      title="Mover seleccionado a la izquierda"
+    >
+      <i class="ri-arrow-left-line"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-secondary"
+      (click)="moveAllToAvailable()"
+      [disabled]="selectedItems.length === 0"
+      title="Mover todos a la izquierda"
+    >
+      <i class="ri-arrow-left-double-line"></i>
+    </button>
+  </div>
+
+  <!-- Selected Items List -->
+  <div class="listbox" [style.height]="height">
+    <h6 class="listbox-title">Seleccionados</h6>
+    <div *ngIf="showSearchBox" class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="selectedSearchTerm"
+        (input)="filterItems('selected')"
+        placeholder="Buscar..."
+        class="form-control form-control-sm"
+      />
+      <span class="search-icon">
+        <i class="ri-search-line"></i>
+      </span>
+    </div>
+    <div class="listbox-items" role="listbox" aria-label="Elementos seleccionados">
+      <div
+        *ngFor="let item of selectedFilteredItems; trackBy: trackByFn"
+        class="listbox-item"
+        [class.selected]="isSelectedSelected(item)"
+        (click)="selectSelectedItem(item)"
+        (keydown.enter)="selectSelectedItem(item); $event.preventDefault()"
+        (keydown.space)="selectSelectedItem(item); $event.preventDefault()"
+        tabindex="0"
+        [attr.aria-label]="getDisplayValue(item)"
+      >
+        {{ getDisplayValue(item) }}
+      </div>
+      <div *ngIf="selectedFilteredItems.length === 0" class="listbox-empty">
+        No hay elementos seleccionados
+      </div>
+    </div>
+  </div>
+</div>

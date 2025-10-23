@@ -12,9 +12,9 @@ import { EtapaComponent } from './etapa/etapa.component';
 import { TallerComponent } from './taller/taller.component';
 import { GrupotallerComponent } from './grupotaller/grupotaller.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { EtapagrupoComponent } from './etapagrupo/etapagrupo.component';
 import { AperturatallerComponent } from './aperturataller/aperturataller.component';
+import { DualListboxComponent } from '../../shared/dual-listbox/dual-listbox.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { AperturatallerComponent } from './aperturataller/aperturataller.compone
     DataTablesModule,
     NgbModalModule,
     NgSelectModule,
-    AngularDualListBoxModule ,
+    DualListboxComponent,
     ConfiguracionesRoutingModule
   ]
 })
