@@ -15,17 +15,42 @@ import { ExternalApiService } from 'src/app/core/services/externalApi.service';
  
 
 
-export interface Cronograma  { 
-      anio: string,
-      mes: string,
-      titulo: string,
-      horarios: Array<{
-          idTallerApertura: number,
-          hora: string,
-          color: string,
-          bloques: Array<{ centro: string, fechas: string, semanas: string[] }>
-      }>
-  }
+export interface Aula {
+  nombreAula: string;
+  talleres: TallerDetalle[];
+}
+
+export interface TallerDetalle {
+  idTallerApertura: number;
+  nombreTaller: string;
+  profesor: string;
+  rangoFechas: string;
+  etapa: string;
+  rangoEdad: string;
+  diaSemana: string;
+  local?: string;
+  nombreLocal?: string;
+  matriculados: number;
+  libres: number;
+  totalVacantes: number;
+  horaInicio: string;
+  horaFin: string;
+  color?: string;
+}
+
+export interface HorarioRow {
+  horario: string; // Ej: "9AM A 11AM"
+  horaInicio: string;
+  horaFin: string;
+  aulas: Aula[];
+}
+
+export interface CalendarioMes {
+  anio: string;
+  mes: string;
+  titulo: string;
+  horarios: HorarioRow[];
+}
 
 
 
@@ -46,9 +71,22 @@ export interface Cronograma  {
 export class AlumnoComponent implements OnInit, AfterViewInit {
   filtroAnio: string = '';
   filtroMes: string = '';
+  filtroLocal: string = '';
+  filtroDiaSemana: string = '';
+  filtroEtapa: string = '';
+  filtroRangoEdad: string = '';
+  filtroTaller: string = '';
+  
   aniosDisponibles: string[] = [];
   mesesDisponibles: string[] = [];
-  data: Cronograma[] = [];
+  localesDisponibles: string[] = [];
+  diasSemanaDisponibles: string[] = [];
+  etapasDisponibles: string[] = [];
+  rangoEdadDisponibles: string[] = [];
+  talleresDisponibles: string[] = [];
+  
+  data: CalendarioMes[] = [];
+  dataOriginal: CalendarioMes[] = []; // Para mantener los datos sin filtrar
   ngOnInit(): void {
     this.configurarDataTables();
     this.listarAlumnosDebug();
@@ -587,40 +625,213 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
   listarCalendarioTaller(anio: any, mes: any) {
   this.tallerService.listarCalendarioTaller(anio, mes).subscribe({
     next: (response) => {
-      const agrupado: { [key: string]: any } = {};
 
+      response.data = [
+    [
+      "2025",
+      "SEPTIEMBRE",
+      "[{\"idTallerApertura\":101,\"nombreTaller\":\"TEATRO INFANTIL\",\"descripcionTaller\":\"TEATRO INFANTIL\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"5/7 AÑOS\",\"descripcionGrupo\":\"5/7 AÑOS\",\"diaSemana\":\"LUNES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-09-01\",\"fechaFin\":\"2025-09-30\",\"rangoFechas\":\"01 DE SEP - 30 DE SEP\",\"profesor\":\"MARIA GARCIA\",\"nombreProfesor\":\"MARIA GARCIA\",\"total_vacantes\":15,\"vacantes_disponible\":8,\"matriculados\":7,\"libres\":8},{\"idTallerApertura\":102,\"nombreTaller\":\"DANZA MODERNA\",\"descripcionTaller\":\"DANZA MODERNA\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"8/10 AÑOS\",\"descripcionGrupo\":\"8/10 AÑOS\",\"diaSemana\":\"MARTES\",\"horaInicio\":\"11:00\",\"horaFin\":\"13:00\",\"fechaInicio\":\"2025-09-02\",\"fechaFin\":\"2025-09-30\",\"rangoFechas\":\"02 DE SEP - 30 DE SEP\",\"profesor\":\"CARMEN LOPEZ\",\"nombreProfesor\":\"CARMEN LOPEZ\",\"total_vacantes\":20,\"vacantes_disponible\":5,\"matriculados\":15,\"libres\":5},{\"idTallerApertura\":103,\"nombreTaller\":\"ARTE Y PINTURA\",\"descripcionTaller\":\"ARTE Y PINTURA\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"6/8 AÑOS\",\"descripcionGrupo\":\"6/8 AÑOS\",\"diaSemana\":\"MIERCOLES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-09-03\",\"fechaFin\":\"2025-09-30\",\"rangoFechas\":\"03 DE SEP - 30 DE SEP\",\"profesor\":\"JUAN MARTINEZ\",\"nombreProfesor\":\"JUAN MARTINEZ\",\"total_vacantes\":12,\"vacantes_disponible\":4,\"matriculados\":8,\"libres\":4},{\"idTallerApertura\":104,\"nombreTaller\":\"MÚSICA Y CANTO\",\"descripcionTaller\":\"MÚSICA Y CANTO\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"9/11 AÑOS\",\"descripcionGrupo\":\"9/11 AÑOS\",\"diaSemana\":\"JUEVES\",\"horaInicio\":\"13:30\",\"horaFin\":\"15:30\",\"fechaInicio\":\"2025-09-04\",\"fechaFin\":\"2025-09-30\",\"rangoFechas\":\"04 DE SEP - 30 DE SEP\",\"profesor\":\"ANA RODRIGUEZ\",\"nombreProfesor\":\"ANA RODRIGUEZ\",\"total_vacantes\":18,\"vacantes_disponible\":10,\"matriculados\":8,\"libres\":10},{\"idTallerApertura\":105,\"nombreTaller\":\"ROBÓTICA\",\"descripcionTaller\":\"ROBÓTICA\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"ACE\",\"descripcionEtapa\":\"ACE\",\"rangoEdad\":\"11/16 AÑOS\",\"descripcionGrupo\":\"11/16 AÑOS\",\"diaSemana\":\"VIERNES\",\"horaInicio\":\"16:30\",\"horaFin\":\"18:30\",\"fechaInicio\":\"2025-09-05\",\"fechaFin\":\"2025-09-30\",\"rangoFechas\":\"05 DE SEP - 30 DE SEP\",\"profesor\":\"PEDRO SANCHEZ\",\"nombreProfesor\":\"PEDRO SANCHEZ\",\"total_vacantes\":10,\"vacantes_disponible\":2,\"matriculados\":8,\"libres\":2}]"
+    ],
+    [
+      "2025",
+      "OCTUBRE",
+      "[{\"idTallerApertura\":201,\"nombreTaller\":\"TEATRO AVANZADO\",\"descripcionTaller\":\"TEATRO AVANZADO\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"5/7 AÑOS\",\"descripcionGrupo\":\"5/7 AÑOS\",\"diaSemana\":\"MIERCOLES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-10-01\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"01 DE OCT - 31 DE OCT\",\"profesor\":\"MARIA GARCIA\",\"nombreProfesor\":\"MARIA GARCIA\",\"total_vacantes\":15,\"vacantes_disponible\":6,\"matriculados\":9,\"libres\":6},{\"idTallerApertura\":202,\"nombreTaller\":\"BALLET CLÁSICO\",\"descripcionTaller\":\"BALLET CLÁSICO\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"8/10 AÑOS\",\"descripcionGrupo\":\"8/10 AÑOS\",\"diaSemana\":\"JUEVES\",\"horaInicio\":\"11:00\",\"horaFin\":\"13:00\",\"fechaInicio\":\"2025-10-02\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"02 DE OCT - 31 DE OCT\",\"profesor\":\"CARMEN LOPEZ\",\"nombreProfesor\":\"CARMEN LOPEZ\",\"total_vacantes\":20,\"vacantes_disponible\":3,\"matriculados\":17,\"libres\":3},{\"idTallerApertura\":203,\"nombreTaller\":\"ESCULTURA\",\"descripcionTaller\":\"ESCULTURA\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"6/8 AÑOS\",\"descripcionGrupo\":\"6/8 AÑOS\",\"diaSemana\":\"VIERNES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-10-03\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"03 DE OCT - 31 DE OCT\",\"profesor\":\"JUAN MARTINEZ\",\"nombreProfesor\":\"JUAN MARTINEZ\",\"total_vacantes\":12,\"vacantes_disponible\":7,\"matriculados\":5,\"libres\":7},{\"idTallerApertura\":204,\"nombreTaller\":\"PIANO Y TECLADO\",\"descripcionTaller\":\"PIANO Y TECLADO\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"9/11 AÑOS\",\"descripcionGrupo\":\"9/11 AÑOS\",\"diaSemana\":\"LUNES\",\"horaInicio\":\"13:30\",\"horaFin\":\"15:30\",\"fechaInicio\":\"2025-10-06\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"06 DE OCT - 31 DE OCT\",\"profesor\":\"ANA RODRIGUEZ\",\"nombreProfesor\":\"ANA RODRIGUEZ\",\"total_vacantes\":18,\"vacantes_disponible\":12,\"matriculados\":6,\"libres\":12},{\"idTallerApertura\":205,\"nombreTaller\":\"PROGRAMACIÓN WEB\",\"descripcionTaller\":\"PROGRAMACIÓN WEB\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"ACE\",\"descripcionEtapa\":\"ACE\",\"rangoEdad\":\"11/16 AÑOS\",\"descripcionGrupo\":\"11/16 AÑOS\",\"diaSemana\":\"MARTES\",\"horaInicio\":\"16:30\",\"horaFin\":\"18:30\",\"fechaInicio\":\"2025-10-07\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"07 DE OCT - 31 DE OCT\",\"profesor\":\"PEDRO SANCHEZ\",\"nombreProfesor\":\"PEDRO SANCHEZ\",\"total_vacantes\":10,\"vacantes_disponible\":1,\"matriculados\":9,\"libres\":1},{\"idTallerApertura\":206,\"nombreTaller\":\"PROGRAMACIÓN AVANZADA\",\"descripcionTaller\":\"PROGRAMACIÓN AVANZADA\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 3 - LUZ\",\"etapa\":\"ACE\",\"descripcionEtapa\":\"ACE\",\"rangoEdad\":\"11/16 AÑOS\",\"descripcionGrupo\":\"11/16 AÑOS\",\"diaSemana\":\"VIERNES\",\"horaInicio\":\"16:30\",\"horaFin\":\"18:30\",\"fechaInicio\":\"2025-10-03\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"03 DE OCT - 31 DE OCT\",\"profesor\":\"PEDRO SANCHEZ\",\"nombreProfesor\":\"PEDRO SANCHEZ\",\"total_vacantes\":10,\"vacantes_disponible\":1,\"matriculados\":9,\"libres\":1}]"
+    ],
+    [
+      "2025",
+      "NOVIEMBRE",
+      "[{\"curso\": \"HC\", \"etapa\": \"FORMACIÓN DE LÍDERES\", \"local\": \"SAN MIGUEL\", \"libres\": 0, \"horaFin\": \"14:04\", \"fechaFin\": \"2025-12-11 14:04:00.000000\", \"profesor\": \"\", \"diaSemana\": \"Jueves\", \"rangoEdad\": \"5/10 AÑOS\", \"horaInicio\": \"13:04\", \"nombreAula\": \"AULA VERDE\", \"fechaInicio\": \"2025-10-23 00:00:00.000000\", \"nombreLocal\": \"SAN MIGUEL\", \"rangoFechas\": \"23 OCT - 11 DEC\", \"matriculados\": 0, \"nombreTaller\": \"dsfghjkl\", \"nombreProfesor\": \"\", \"total_vacantes\": 10, \"descripcionCurso\": \"HABLA CON ESTILO\", \"descripcionEtapa\": \"FORMACIÓN DE LÍDERES\", \"descripcionGrupo\": \"5/10 AÑOS\", \"idAperturaTaller\": 1, \"descripcionTaller\": \"dsfghjkl\", \"vacantes_disponible\": 10}]"
+    ]
+  ];
+
+      console.log('Respuesta del API de calendario de taller:', response);
+      // Parsear datos del API y transformarlos a la nueva estructura
+      const calendarioMap: { [key: string]: CalendarioMes } = {};
+      
       response.data.forEach((element: any) => {
-        const anio = element[0];
-        const mes = element[1];
-        const titulo = element[1];
-        const horarios = JSON.parse(element[2]);
-
-        const key = `${anio}-${mes}`;
-        if (!agrupado[key]) {
-          agrupado[key] = {
-            anio,
-            mes,
-            titulo,
+        const anioData = element[0];
+        const mesData = element[1];
+        const talleresJson = JSON.parse(element[2]);
+        
+        const key = `${anioData}-${mesData}`;
+        
+        if (!calendarioMap[key]) {
+          calendarioMap[key] = {
+            anio: anioData,
+            mes: mesData,
+            titulo: mesData,
             horarios: []
           };
         }
-        agrupado[key].horarios = agrupado[key].horarios.concat(horarios);
+        
+        // Agrupar talleres por horario
+        const horarioMap: { [horarioKey: string]: HorarioRow } = {};
+        
+        talleresJson.forEach((taller: any) => {
+          const horarioKey = `${taller.horaInicio}-${taller.horaFin}`;
+          
+          if (!horarioMap[horarioKey]) {
+            horarioMap[horarioKey] = {
+              horario: `${this.formatHora(taller.horaInicio)} A ${this.formatHora(taller.horaFin)}`,
+              horaInicio: taller.horaInicio,
+              horaFin: taller.horaFin,
+              aulas: []
+            };
+          }
+          
+          // Buscar o crear aula
+          let aula = horarioMap[horarioKey].aulas.find(a => a.nombreAula === taller.nombreAula);
+          if (!aula) {
+            aula = {
+              nombreAula: taller.nombreAula || 'Sin Aula',
+              talleres: []
+            };
+            horarioMap[horarioKey].aulas.push(aula);
+          }
+          
+          // Agregar taller al aula
+          aula.talleres.push({
+            idTallerApertura: taller.idTallerApertura,
+            nombreTaller: taller.nombreTaller || taller.descripcionTaller,
+            profesor: taller.profesor || 'Sin Profesor',
+            rangoFechas: taller.rangoFechas || `${taller.fechaInicio} - ${taller.fechaFin}`,
+            etapa: taller.etapa || taller.descripcionEtapa,
+            rangoEdad: taller.rangoEdad || taller.descripcionGrupo,
+            diaSemana: taller.diaSemana,
+            local: taller.local || taller.nombreLocal,
+            nombreLocal: taller.nombreLocal || taller.local,
+            matriculados: taller.matriculados || (taller.total_vacantes - taller.vacantes_disponible) || 0,
+            libres: taller.libres || taller.vacantes_disponible || 0,
+            totalVacantes: taller.totalVacantes || taller.total_vacantes || 0,
+            horaInicio: taller.horaInicio,
+            horaFin: taller.horaFin,
+            color: taller.color || this.obtenerColorPorHorario(taller.horaInicio)
+          });
+        });
+        
+        calendarioMap[key].horarios = Object.values(horarioMap);
       });
-
-      this.data = Object.values(agrupado);
-
-      // Inicializar meses y años disponibles
-     this.mesesDisponibles = this.data.map(m => m.mes.toString());
-     this.aniosDisponibles = this.data.map(m => m.anio.toString());
-    //quitar duplicados
-     this.aniosDisponibles = Array.from(new Set(this.aniosDisponibles));
-     this.mesesDisponibles = Array.from(new Set(this.mesesDisponibles));
-      console.log('Calendario de Taller agrupado:', this.data);
+      
+      this.dataOriginal = Object.values(calendarioMap);
+      this.data = JSON.parse(JSON.stringify(this.dataOriginal));
+      
+      // Inicializar filtros disponibles
+      this.extraerFiltrosDisponibles();
+      
+      console.log('Calendario de Taller transformado:', this.data);
     },
     error: () => {
-      Swal.fire('Error', 'Error al actualizar el alumno', 'error');
+      Swal.fire('Error', 'Error al cargar el calendario', 'error');
     }
   });
+}
+
+formatHora(hora: string): string {
+  // Convertir formato 24h a formato 12h con AM/PM
+  const [horas, minutos] = hora.split(':');
+  const h = parseInt(horas);
+  if (h === 0) return '12AM';
+  if (h < 12) return `${h}AM`;
+  if (h === 12) return '12PM';
+  return `${h - 12}PM`;
+}
+
+obtenerColorPorHorario(horaInicio: string): string {
+  const hora = parseInt(horaInicio.split(':')[0]);
+  if (hora >= 9 && hora < 11) return 'bg-warning'; // Naranja
+  if (hora >= 11 && hora < 13) return 'bg-info'; // Azul claro
+  if (hora >= 13 && hora < 15) return 'bg-danger'; // Magenta/Rosa
+  if (hora >= 16 && hora < 19) return 'bg-primary'; // Azul
+  return 'bg-secondary';
+}
+
+extraerFiltrosDisponibles() {
+  // Extraer años y meses únicos
+  this.aniosDisponibles = Array.from(new Set(this.dataOriginal.map(m => m.anio.toString())));
+  this.mesesDisponibles = Array.from(new Set(this.dataOriginal.map(m => m.mes.toString())));
+  
+  // Extraer locales, días de semana, etapas, rangos de edad y talleres únicos
+  const localesSet = new Set<string>();
+  const diasSet = new Set<string>();
+  const etapasSet = new Set<string>();
+  const cursosSet = new Set<string>();
+  const rangoEdadSet = new Set<string>();
+  const talleresSet = new Set<string>();
+  
+  this.dataOriginal.forEach(mes => {
+    mes.horarios.forEach(horarioRow => {
+      horarioRow.aulas.forEach(aula => {
+        aula.talleres.forEach(taller => {
+          if (taller.local) localesSet.add(taller.local);
+          if (taller.diaSemana) diasSet.add(taller.diaSemana);
+          if (taller.etapa) etapasSet.add(taller.etapa);
+          
+          if (taller.rangoEdad) rangoEdadSet.add(taller.rangoEdad);
+          if (taller.nombreTaller) talleresSet.add(taller.nombreTaller);
+        });
+      });
+    });
+  });
+  
+  this.localesDisponibles = Array.from(localesSet).sort();
+  this.diasSemanaDisponibles = Array.from(diasSet).sort();
+  this.etapasDisponibles = Array.from(etapasSet).sort();
+  this.rangoEdadDisponibles = Array.from(rangoEdadSet).sort();
+  this.talleresDisponibles = Array.from(talleresSet).sort();
+}
+
+aplicarFiltros() {
+  // Crear copia profunda de los datos originales
+  this.data = JSON.parse(JSON.stringify(this.dataOriginal));
+  
+  this.data = this.data.filter(mes => {
+    // Filtrar por año y mes
+    if (this.filtroAnio && mes.anio !== this.filtroAnio) return false;
+    if (this.filtroMes && mes.mes !== this.filtroMes) return false;
+    
+    // Filtrar horarios dentro de cada mes
+    if (this.filtroLocal || this.filtroDiaSemana || this.filtroEtapa || this.filtroRangoEdad || this.filtroTaller) {
+      mes.horarios = mes.horarios.map(horarioRow => {
+        // Filtrar aulas y talleres dentro de cada horario
+        const aulasFiltradas = horarioRow.aulas.map(aula => {
+          const talleresFiltrados = aula.talleres.filter(taller => {
+            if (this.filtroLocal && taller.local !== this.filtroLocal) return false;
+            if (this.filtroDiaSemana && taller.diaSemana !== this.filtroDiaSemana) return false;
+            if (this.filtroEtapa && taller.etapa !== this.filtroEtapa) return false;
+            if (this.filtroRangoEdad && taller.rangoEdad !== this.filtroRangoEdad) return false;
+            if (this.filtroTaller && !taller.nombreTaller.toLowerCase().includes(this.filtroTaller.toLowerCase())) return false;
+            return true;
+          });
+          
+          return {
+            ...aula,
+            talleres: talleresFiltrados
+          };
+        }).filter(aula => aula.talleres.length > 0); // Solo aulas con talleres
+        
+        return {
+          ...horarioRow,
+          aulas: aulasFiltradas
+        };
+      }).filter(horarioRow => horarioRow.aulas.length > 0); // Solo horarios con aulas
+      
+      // Si después del filtro no quedan horarios, excluir el mes
+      return mes.horarios.length > 0;
+    }
+    
+    return true;
+  });
+}
+
+limpiarFiltros() {
+  this.filtroAnio = '';
+  this.filtroMes = '';
+  this.filtroLocal = '';
+  this.filtroDiaSemana = '';
+  this.filtroEtapa = '';
+  this.filtroRangoEdad = '';
+  this.filtroTaller = '';
+  this.data = JSON.parse(JSON.stringify(this.dataOriginal));
 }
 
 limpiarAperturaTallerSeleccionado(){
@@ -644,5 +855,21 @@ limpiarAlumnoSeleccionado(){
     fechaNacimiento : '',
     sexo : '',
   }
+}
+
+// Métodos auxiliares para el calendario
+obtenerTodasLasAulas(mes: CalendarioMes): string[] {
+  const aulasSet = new Set<string>();
+  mes.horarios.forEach(horarioRow => {
+    horarioRow.aulas.forEach(aula => {
+      aulasSet.add(aula.nombreAula);
+    });
+  });
+  return Array.from(aulasSet).sort();
+}
+
+obtenerTalleresDeAula(horarioRow: HorarioRow, nombreAula: string): TallerDetalle[] {
+  const aula = horarioRow.aulas.find(a => a.nombreAula === nombreAula);
+  return aula ? aula.talleres : [];
 }
 }

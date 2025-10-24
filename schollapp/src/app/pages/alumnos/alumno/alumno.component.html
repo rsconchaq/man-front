@@ -256,74 +256,185 @@
 
 <ng-template #listaTalleresMes>
   <div class="modal-header">
-    <h5 class="modal-title">Detalles del Alumno</h5>
+    <h5 class="modal-title">Calendario de Talleres</h5>
   </div>
  
     <div class="modal-body">
-      <div class="mb-3 d-flex gap-2 align-items-center">
-        <label class="form-label mb-0">Año:</label>
-        <select class="form-select w-auto" [(ngModel)]="filtroAnio">
-          <option *ngFor="let anio of aniosDisponibles" [value]="anio">{{ anio }}</option>
-        </select>
-        <label class="form-label mb-0 ms-3">Mes:</label>
-        <select class="form-select w-auto" [(ngModel)]="filtroMes">
-          <option *ngFor="let mes of mesesDisponibles" [value]="mes">{{ mes }}</option>
-        </select>
-      </div>
-      <div *ngFor="let mes of data   " class="mb-10">
-  <h2 class="text-2xl font-bold text-center mb-4">{{ mes.titulo }}</h2>
-  <table class="w-11/12 border-collapse shadow-lg text-center mx-auto">
-    <thead>
-      <tr>
-        <th colspan="5" class="bg-gray-200 text-lg font-semibold py-3 border border-gray-300">
-          {{ mes.titulo }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let horario of mes.horarios">
-        <tr >
-          <td
-            [ngClass]="horario.color"
-            class="text-white font-semibold border border-gray-300"
-            rowspan="2"
-          >
-            {{ horario.hora }}
-          </td>
-          <td
-            *ngFor="let bloque of horario.bloques"
-            class="bg-amber-100 border border-gray-300  text-sm align-top"
-            style="cursor: pointer;" (click)="redireccionarMatricula(horario.idTallerApertura)"
-          >
-            <div class="font-semibold">{{ bloque.centro }}</div>
-            <div class="text-xs text-gray-600">{{ bloque.fechas }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td
-            *ngFor="let bloque of horario.bloques"
-            class="bg-green-500 text-white font-bold border border-gray-300"
-          >
-            <div 
-              class="flex justify-center items-center gap-2 py-1"
-              *ngIf="bloque.semanas.length; else emptyCell"
-            >
-              <span
-                *ngFor="let semana of bloque.semanas"
-                class="bg-green-600 px-2 py-1 rounded-sm"
-              >
-               <b>{{ semana }}</b>
-              </span>
+      <!-- Filtros -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <h6 class="mb-0">
+            <i class="ri-filter-line"></i> Filtros
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-2">
+              <label class="form-label">Año:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroAnio" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let anio of aniosDisponibles" [value]="anio">{{ anio }}</option>
+              </select>
             </div>
-            <ng-template #emptyCell>
-              <div class="opacity-70">-</div>
-            </ng-template>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
-</div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Mes:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroMes" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let mes of mesesDisponibles" [value]="mes">{{ mes }}</option>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Local:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroLocal" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let local of localesDisponibles" [value]="local">{{ local }}</option>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Día Semana:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroDiaSemana" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let dia of diasSemanaDisponibles" [value]="dia">{{ dia }}</option>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Etapa:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroEtapa" (change)="aplicarFiltros()">
+                <option value="">Todas</option>
+                <option *ngFor="let etapa of etapasDisponibles" [value]="etapa">{{ etapa }}</option>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Rango Edad:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroRangoEdad" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let rango of rangoEdadDisponibles" [value]="rango">{{ rango }}</option>
+              </select>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Taller:</label>
+              <select class="form-select form-select-sm" [(ngModel)]="filtroTaller" (change)="aplicarFiltros()">
+                <option value="">Todos</option>
+                <option *ngFor="let taller of talleresDisponibles" [value]="taller">{{ taller }}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row mt-3">
+            <div class="col-12 text-end">
+              <button class="btn btn-sm btn-secondary" (click)="limpiarFiltros()">
+                <i class="ri-refresh-line"></i> Limpiar Filtros
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Resultados -->
+      <div *ngIf="data.length === 0" class="alert alert-info text-center">
+        <i class="ri-information-line"></i> No se encontraron talleres con los filtros seleccionados.
+      </div>
+      
+      <div *ngFor="let mes of data" class="mb-5 calendario-talleres">
+        <h4 class="text-center mb-3 fw-bold text-uppercase" style="color: #495057;">
+          {{ mes.titulo }}
+        </h4>
+        
+        <div class="table-responsive">
+          <table class="table table-bordered text-center align-middle" style="min-width: 800px;">
+            <thead>
+              <tr>
+                <th style="width: 120px; background-color: #495057; color: white;">HORARIO</th>
+                <th *ngFor="let aula of obtenerTodasLasAulas(mes)" 
+                    style="min-width: 200px; background-color: #495057; color: white;">
+                  <i class="ri-door-line me-1"></i>{{ aula }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let horarioRow of mes.horarios">
+                <!-- Columna de Horario -->
+                <td [ngClass]="obtenerColorPorHorario(horarioRow.horaInicio)" 
+                    class="horario-cell align-middle">
+                  {{ horarioRow.horario }}
+                </td>
+                
+                <!-- Columnas de Aulas -->
+                <td *ngFor="let aulaName of obtenerTodasLasAulas(mes)" 
+                    class="p-2" 
+                    [class.table-light]="!obtenerTalleresDeAula(horarioRow, aulaName).length"
+                    style="vertical-align: top; background-color: #f8f9fa;">
+                  
+                  <!-- Talleres en esta aula y horario -->
+                  <div *ngFor="let taller of obtenerTalleresDeAula(horarioRow, aulaName)" 
+                       class="taller-card border rounded p-2 mb-2 bg-white position-relative shadow-sm"
+                       style="cursor: pointer;"
+                       (click)="redireccionarMatricula(taller.idTallerApertura)">
+                    
+                    <!-- Header con etapa y rango de edad -->
+                    <div class="mb-2 d-flex justify-content-center flex-wrap gap-1">
+                      <span class="badge" style="background-color: #6366f1; font-size: 0.7rem;">
+                        {{ taller.etapa }}
+                      </span>
+                      <span class="badge" style="background-color: #f59e0b; font-size: 0.7rem;">
+                        {{ taller.rangoEdad }}
+                      </span>
+                    </div>
+
+                    <!-- Nombre del taller -->
+                    <div class="fw-bold text-dark mb-1 text-center" style="font-size: 0.85rem; line-height: 1.2;">
+                      {{ taller.nombreLocal  }} 
+                    </div>
+
+                    <!-- Nombre del taller -->
+                    <div class="fw-bold text-dark mb-1 text-center" style="font-size: 0.85rem; line-height: 1.2;">
+                      {{ taller.nombreTaller  }} 
+                    </div>
+                    
+                    <!-- Fechas -->
+                    <div class="text-muted text-center small mb-1" style="font-size: 0.7rem;">
+                      <i class="ri-calendar-line"></i> {{ taller.rangoFechas }}
+                    </div>
+                    
+                    <!-- Profesor -->
+                    <div class="text-secondary text-center small mb-2" style="font-size: 0.75rem;">
+                      <i class="ri-user-line"></i> {{ taller.profesor }}
+                    </div>
+                    
+                    <!-- Vacantes -->
+                    <div class="d-flex justify-content-center gap-2 mt-2">
+                      <div class="d-flex flex-column align-items-center">
+                        <span class="badge bg-success" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
+                          {{ taller.matriculados }}
+                        </span>
+                        <small class="text-muted" style="font-size: 0.65rem;">Matriculados</small>
+                      </div>
+                      <div class="d-flex flex-column align-items-center">
+                        <span class="badge bg-danger" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
+                          {{ taller.libres }}
+                        </span>
+                        <small class="text-muted" style="font-size: 0.65rem;">Libres</small>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Si no hay talleres, mostrar X -->
+                  <div *ngIf="!obtenerTalleresDeAula(horarioRow, aulaName).length" 
+                       class="aula-vacia py-4">
+                    X
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
 
 
