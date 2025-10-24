@@ -80,7 +80,7 @@ export const GlobalComponent = {
             APERTURATALLER : 'v1/taller/aperturaTaller',
             LISTARAPERTURATALLER : 'v1/taller/listarAperturaTaller',
             OBTENERAPERTURATALLERID : 'v1/taller/obtenerAperturaTallerId/{idAperturaTaller}',
-            LISTARCALENDARIOTALLER :'v1/taller/listarCalendarioTaller/{anio}/{mes}'
+            LISTARCALENDARIOTALLER :'v1/taller/listarCalendarioTaller/{edad}/{idAlumno}/{flag}'
 
         },
         ALUMNO:{

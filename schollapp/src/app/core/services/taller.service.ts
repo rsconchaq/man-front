@@ -120,8 +120,8 @@ export class TallerService {
     );
   }
 
-  listarCalendarioTaller(anio:any,mes:any): Observable<any> {
-    const url = `${this.apiUrl}${this.endpoints.LISTARCALENDARIOTALLER.replace('{anio}', anio).replace('{mes}', mes)}`;
+  listarCalendarioTaller(edad:any,idAlumno:any,flag:any): Observable<any> {
+    const url = `${this.apiUrl}${this.endpoints.LISTARCALENDARIOTALLER.replace('{edad}', edad).replace('{idAlumno}', idAlumno).replace('{flag}', flag)}`;
 
     return this.http.get<any>(url, {
       headers: GlobalComponent.headerToken

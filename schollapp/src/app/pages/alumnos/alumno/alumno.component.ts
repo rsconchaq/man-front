@@ -2,6 +2,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { AlumnoService } from '../../../core/services/alumno.service';
@@ -128,7 +129,8 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
     private readonly apoderadoService: ApoderadoService,
     private readonly tallerService: TallerService,
     private readonly externalApiService: ExternalApiService,
-    private readonly modalService: NgbModal
+    private readonly modalService: NgbModal,
+    private readonly router: Router
   ) {
     this.alumnoForm = this.formBuilder.group({
       codigo: [''],
@@ -379,7 +381,7 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
      this.alumnoService.obtenerAlumno(id).subscribe({
       next: (response) => {
         this.datosAlumnoSelected = response.data;
-            this.listarCalendarioTaller('2323','12');
+            this.listarCalendarioTaller(this.datosAlumnoSelected.edad, this.datosAlumnoSelected.idAlumno, 'SI');
 
 
         this.modalRef = this.modalService.open(this.listaTalleresMesTemplate, {
@@ -453,6 +455,14 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
     const idTipoMatricula = (document.getElementById('idTipoMatricula') as HTMLSelectElement).value;
     const idPagoMatricula = (document.getElementById('idPagoMatricula') as HTMLSelectElement).value;
 
+    Swal.fire({
+      title: 'Registrando matrícula...',
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false
+    });
+
    let body= {
      idMatricula: 0,
      codigo: "",
@@ -470,7 +480,27 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
        this.tallerService.registrarMatricula(body).subscribe({
         next: (response) => {
           if(response.success){
-            Swal.fire('Matrícula Registrada', 'La matrícula ha sido registrada correctamente', 'success');
+            Swal.fire({
+              icon: 'success',
+              title: 'Matrícula Registrada',
+              text: 'La matrícula ha sido registrada correctamente',
+              showConfirmButton: true,
+              timer: 2000
+            }).then(() => {
+              // Redireccionar a alumno-detalle con state
+
+              this.modalService.dismissAll();
+              this.modalRef = null;
+
+              this.router.navigate(['/alumnos/alumno-detalle', this.datosAlumnoSelected.idAlumno], {
+                state: {
+                  origen: 'matricula',
+                  idMatricula: response.data || null,
+                  abrirModal: true,
+                  activeTab: 2
+                }
+              });
+            });
           } else {
             Swal.fire('Error', response.message || 'No se pudo registrar la matrícula', 'error');
           }
@@ -632,11 +662,11 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
     }
   }
 
-  listarCalendarioTaller(anio: any, mes: any) {
-  this.tallerService.listarCalendarioTaller(anio, mes).subscribe({
+  listarCalendarioTaller(edad: any, idAlumno: any, flag: any) {
+  this.tallerService.listarCalendarioTaller(edad, idAlumno, flag).subscribe({
     next: (response) => {
 
-      response.data = [
+     let data  = [
     [
       "2025",
       "SEPTIEMBRE",
@@ -646,17 +676,16 @@ export class AlumnoComponent implements OnInit, AfterViewInit {
       "2025",
       "OCTUBRE",
       "[{\"idTallerApertura\":201,\"nombreTaller\":\"TEATRO AVANZADO\",\"descripcionTaller\":\"TEATRO AVANZADO\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"5/7 AÑOS\",\"descripcionGrupo\":\"5/7 AÑOS\",\"diaSemana\":\"MIERCOLES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-10-01\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"01 DE OCT - 31 DE OCT\",\"profesor\":\"MARIA GARCIA\",\"nombreProfesor\":\"MARIA GARCIA\",\"total_vacantes\":15,\"vacantes_disponible\":6,\"matriculados\":9,\"libres\":6},{\"idTallerApertura\":202,\"nombreTaller\":\"BALLET CLÁSICO\",\"descripcionTaller\":\"BALLET CLÁSICO\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 1 - SAMIRA\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"8/10 AÑOS\",\"descripcionGrupo\":\"8/10 AÑOS\",\"diaSemana\":\"JUEVES\",\"horaInicio\":\"11:00\",\"horaFin\":\"13:00\",\"fechaInicio\":\"2025-10-02\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"02 DE OCT - 31 DE OCT\",\"profesor\":\"CARMEN LOPEZ\",\"nombreProfesor\":\"CARMEN LOPEZ\",\"total_vacantes\":20,\"vacantes_disponible\":3,\"matriculados\":17,\"libres\":3},{\"idTallerApertura\":203,\"nombreTaller\":\"ESCULTURA\",\"descripcionTaller\":\"ESCULTURA\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"CE\",\"descripcionEtapa\":\"CE\",\"rangoEdad\":\"6/8 AÑOS\",\"descripcionGrupo\":\"6/8 AÑOS\",\"diaSemana\":\"VIERNES\",\"horaInicio\":\"09:00\",\"horaFin\":\"11:00\",\"fechaInicio\":\"2025-10-03\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"03 DE OCT - 31 DE OCT\",\"profesor\":\"JUAN MARTINEZ\",\"nombreProfesor\":\"JUAN MARTINEZ\",\"total_vacantes\":12,\"vacantes_disponible\":7,\"matriculados\":5,\"libres\":7},{\"idTallerApertura\":204,\"nombreTaller\":\"PIANO Y TECLADO\",\"descripcionTaller\":\"PIANO Y TECLADO\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"HCE\",\"descripcionEtapa\":\"HCE\",\"rangoEdad\":\"9/11 AÑOS\",\"descripcionGrupo\":\"9/11 AÑOS\",\"diaSemana\":\"LUNES\",\"horaInicio\":\"13:30\",\"horaFin\":\"15:30\",\"fechaInicio\":\"2025-10-06\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"06 DE OCT - 31 DE OCT\",\"profesor\":\"ANA RODRIGUEZ\",\"nombreProfesor\":\"ANA RODRIGUEZ\",\"total_vacantes\":18,\"vacantes_disponible\":12,\"matriculados\":6,\"libres\":12},{\"idTallerApertura\":205,\"nombreTaller\":\"PROGRAMACIÓN WEB\",\"descripcionTaller\":\"PROGRAMACIÓN WEB\",\"local\":\"MAGDALENA\",\"nombreLocal\":\"MAGDALENA\",\"nombreAula\":\"AULA 2 - LUZ\",\"etapa\":\"ACE\",\"descripcionEtapa\":\"ACE\",\"rangoEdad\":\"11/16 AÑOS\",\"descripcionGrupo\":\"11/16 AÑOS\",\"diaSemana\":\"MARTES\",\"horaInicio\":\"16:30\",\"horaFin\":\"18:30\",\"fechaInicio\":\"2025-10-07\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"07 DE OCT - 31 DE OCT\",\"profesor\":\"PEDRO SANCHEZ\",\"nombreProfesor\":\"PEDRO SANCHEZ\",\"total_vacantes\":10,\"vacantes_disponible\":1,\"matriculados\":9,\"libres\":1},{\"idTallerApertura\":206,\"nombreTaller\":\"PROGRAMACIÓN AVANZADA\",\"descripcionTaller\":\"PROGRAMACIÓN AVANZADA\",\"local\":\"SAN MIGUEL\",\"nombreLocal\":\"SAN MIGUEL\",\"nombreAula\":\"AULA 3 - LUZ\",\"etapa\":\"ACE\",\"descripcionEtapa\":\"ACE\",\"rangoEdad\":\"11/16 AÑOS\",\"descripcionGrupo\":\"11/16 AÑOS\",\"diaSemana\":\"VIERNES\",\"horaInicio\":\"16:30\",\"horaFin\":\"18:30\",\"fechaInicio\":\"2025-10-03\",\"fechaFin\":\"2025-10-31\",\"rangoFechas\":\"03 DE OCT - 31 DE OCT\",\"profesor\":\"PEDRO SANCHEZ\",\"nombreProfesor\":\"PEDRO SANCHEZ\",\"total_vacantes\":10,\"vacantes_disponible\":1,\"matriculados\":9,\"libres\":1}]"
-    ],
-    [
-      '2025', 'OCTOBER', '[{\"curso\": \"HABLA CON ESTILO\", \"etapa\": \"FORMACIÓN DE LÍDERES\", \"local\": \"SAN MIGUEL\", \"libres\": 0, \"horaFin\": \"14:04\", \"fechaFin\": \"2025-12-11 14:04:00.000000\", \"profesor\": \"\", \"diaSemana\": \"Jueves\", \"rangoEdad\": \"5/10 AÑOS\", \"horaInicio\": \"13:04\", \"nombreAula\": \"AULA VERDE\", \"fechaInicio\": \"2025-10-23 00:00:00.000000\", \"nombreLocal\": \"SAN MIGUEL\", \"rangoFechas\": \"23 OCT - 11 DEC\", \"matriculados\": 0, \"nombreTaller\": \"dsfghjkl\", \"nombreProfesor\": \"\", \"total_vacantes\": 10, \"descripcionCurso\": \"HABLA CON ESTILO\", \"descripcionEtapa\": \"FORMACIÓN DE LÍDERES\", \"descripcionGrupo\": \"5/10 AÑOS\", \"idAperturaTaller\": 1, \"descripcionTaller\": \"dsfghjkl\", \"vacantes_disponible\": 10, \"descripcionCursoCorta\": \"HC\"}]'
-    ]
+    ] 
   ];
+
+  data.push(response.data[0]);
 
       console.log('Respuesta del API de calendario de taller:', response);
       // Parsear datos del API y transformarlos a la nueva estructura
       const calendarioMap: { [key: string]: CalendarioMes } = {};
       
-      response.data.forEach((element: any) => {
+      data.forEach((element: any) => {
         const anioData = element[0];
         const mesData = element[1];
         const talleresJson = JSON.parse(element[2]);

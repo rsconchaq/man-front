@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, TemplateRef, Injectable } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModalModule, NgbModal, NgbDateStruct, NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import { AlumnoService } from '../../../core/services/alumno.service';
 import { TallerService } from '../../../core/services/taller.service';
@@ -98,6 +98,7 @@ export class AlumnoDetalleComponent implements OnInit {
 
     constructor(
         private readonly route: ActivatedRoute,
+        private readonly router: Router,
         private readonly alumnoService: AlumnoService,
         private readonly tallerService: TallerService,
         private readonly formBuilder: FormBuilder,
@@ -143,6 +144,16 @@ export class AlumnoDetalleComponent implements OnInit {
                 this.alumnoId = Number(id);
                 this.cargarDatosAlumno(this.alumnoId);
                 this.cargarTalleresAlumno(this.alumnoId);
+
+                // Detectar si viene desde matrícula para abrir modal automáticamente
+                const state = history.state;
+                if (state && state.origen === 'matricula' && state.abrirModal) {
+                    // Esperar a que se carguen los datos antes de abrir el modal
+                    this.activeTabModal = 2;
+                    setTimeout(() => {
+                        this.abrirModalDesdeMatricula(state);
+                    }, 1500);
+                }
             }
         });
     }
@@ -160,10 +171,12 @@ export class AlumnoDetalleComponent implements OnInit {
         this.alumnoService.listarTalleresMatriculados(idAlumno).subscribe({
             next: (response: any) => {
                 if (response.success) {
+                    Swal.close();
                     this.talleresList = response.data;
                 }
             },
             error: (error: any) => {
+                Swal.close();
                 console.error('Error al cargar talleres:', error);
             }
         });
@@ -239,6 +252,43 @@ export class AlumnoDetalleComponent implements OnInit {
             centered: true,
             backdrop: 'static'
         });
+    }
+
+    abrirModalDesdeMatricula(state: any): void {
+        // Buscar el taller recién matriculado
+        const taller = this.talleresList.find(t => t.idMatricula === state.idMatricula);
+        
+        if (taller) {
+            this.tallerSeleccionado = taller;
+            // Establecer la pestaña activa según el state (2 = cuotas)
+            this.activeTabModal = state.activeTab || 2;
+            this.cargarSeguimiento(taller);
+            this.cargarCuotas(taller);
+            this.modalRef = this.modalService.open(this.tallerDetalleModalTemplate, {
+                size: 'xl',
+                centered: true,
+                backdrop: 'static'
+            });
+        } else {
+            // Si no se encuentra el taller, recargar la lista e intentar de nuevo
+            if (this.alumnoId) {
+                this.cargarTalleresAlumno(this.alumnoId);
+                setTimeout(() => {
+                    const tallerRetry = this.talleresList.find(t => t.idMatricula === state.idMatricula);
+                    if (tallerRetry) {
+                        this.tallerSeleccionado = tallerRetry;
+                        this.activeTabModal = state.activeTab || 2;
+                        this.cargarSeguimiento(tallerRetry);
+                        this.cargarCuotas(tallerRetry);
+                        this.modalRef = this.modalService.open(this.tallerDetalleModalTemplate, {
+                            size: 'xl',
+                            centered: true,
+                            backdrop: 'static'
+                        });
+                    }
+                }, 1000);
+            }
+        }
     }
 
     cargarSeguimiento(taller: any): void {
