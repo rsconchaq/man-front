@@ -319,9 +319,9 @@
             
             <div class="col-md-2">
               <label class="form-label">Taller:</label>
-              <select class="form-select form-select-sm" [(ngModel)]="filtroTaller" (change)="aplicarFiltros()">
+              <select class="form-select form-select-sm" [(ngModel)]="filtroCurso" (change)="aplicarFiltros()">
                 <option value="">Todos</option>
-                <option *ngFor="let taller of talleresDisponibles" [value]="taller">{{ taller }}</option>
+                <option *ngFor="let taller of cursosDisponibles" [value]="taller">{{ taller }}</option>
               </select>
             </div>
           </div>
@@ -382,6 +382,9 @@
                       <span class="badge" style="background-color: #6366f1; font-size: 0.7rem;">
                         {{ taller.etapa }}
                       </span>
+                       <span class="badge" style="background-color: #00d9ff; font-size: 0.7rem;">
+                        {{ taller.cursoCorto }}
+                      </span>
                       <span class="badge" style="background-color: #f59e0b; font-size: 0.7rem;">
                         {{ taller.rangoEdad }}
                       </span>
@@ -410,13 +413,19 @@
                     <!-- Vacantes -->
                     <div class="d-flex justify-content-center gap-2 mt-2">
                       <div class="d-flex flex-column align-items-center">
-                        <span class="badge bg-success" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
+                        <span class="badge bg-danger" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
                           {{ taller.matriculados }}
                         </span>
                         <small class="text-muted" style="font-size: 0.65rem;">Matriculados</small>
                       </div>
                       <div class="d-flex flex-column align-items-center">
-                        <span class="badge bg-danger" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
+                        <span class="badge bg-success" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
+                          {{ taller.disponibles }}
+                        </span>
+                        <small class="text-muted" style="font-size: 0.65rem;">Disponibles</small>
+                      </div>
+                      <div class="d-flex flex-column align-items-center">
+                        <span class="badge bg-warning" style="font-size: 1rem; padding: 0.4rem 0.6rem; min-width: 35px;">
                           {{ taller.libres }}
                         </span>
                         <small class="text-muted" style="font-size: 0.65rem;">Libres</small>
@@ -459,35 +468,35 @@
         <div class="row g-2">
           <div class="col-md-2">
             <label class="form-label">Etapa</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionEtapa || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionEtapa || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Grupo</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionGrupo || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionGrupo || ''" readonly disabled>
           </div>
           <div class="col-md-3">
             <label class="form-label">Descripcion Taller Academico</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionTaller || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionTaller || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Local</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionLocal || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.descripcionLocal || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Total Vacantes</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.total_vacantes || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.total_vacantes || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Total Vacantes Disponibles</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.vacantes_disponible || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.vacantes_disponible || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Fecha Inicio</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaInicio || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaInicio || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Fecha Fin</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaFin || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosTallerSelected.fechaFin || ''" readonly disabled>
           </div>
         </div>
       </div>
@@ -498,33 +507,40 @@
         <div class="row g-2">
           <div class="col-md-3">
             <label class="form-label">Documento Identidad</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.documentoIdentidad || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.documentoIdentidad || ''" readonly disabled>
           </div>
           <div class="col-md-3">
             <label class="form-label">Nombres</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.nombres || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.nombres || ''" readonly disabled>
           </div>
           <div class="col-md-3">
             <label class="form-label">Apellidos</label>
-            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.apellidos || ''" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="datosAlumnoSelected.apellidos || ''" readonly disabled>
           </div>
 
           <div class="col-md-3">
             <label class="form-label">Fecha Nacimiento</label>
-            <input type="text" type="date" class="form-control form-control-sm" [value]="datosAlumnoSelected.fechaNacimiento || ''" readonly>
+            <input type="text" type="date" class="form-control form-control-sm" [value]="datosAlumnoSelected.fechaNacimiento || ''" readonly disabled>
           </div>
           <div class="col-md-2">
             <label class="form-label">Sexo</label>
-            <select class="form-control form-control-sm" [value]="datosAlumnoSelected.sexo || ''" readonly>
+            <select class="form-control form-control-sm" [value]="datosAlumnoSelected.sexo || ''" readonly disabled>
               <option value="MASCULINO">Masculino</option>
               <option value="FEMENINO">Femenino</option>
             </select>
           </div>
           <div class="col-md-3">
             <label class="form-label">Tipo de matrícula</label>
-            <select class="form-control form-control-sm" [value]="'Nuevo'">
-              <option value="Nuevo">Nuevo</option>
-              <option value="Antiguo">Antiguo</option>
+            <select class="form-control form-control-sm" id="idTipoMatricula" [value]="'0'">
+              <option value="0">Nuevo</option>
+              <option value="1">Invitado</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Pago matrícula</label>
+            <select class="form-control form-control-sm" id="idPagoMatricula" [value]="'0'">
+              <option value="0">Corresponder</option>
+              <option value="1">No Corresponde</option>
             </select>
           </div>
         </div>
